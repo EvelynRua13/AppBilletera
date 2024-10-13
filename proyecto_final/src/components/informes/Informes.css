@@ -1,0 +1,62 @@
+.informes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+  }
+  
+  .info-section, .historico-section, .deudas-section {
+    width: 80%;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .historico-ingresos, .historico-egresos {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .deudas-table {
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .deudas-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .deudas-table th, .deudas-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .button-section {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button-ingresos, .button-egresos {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .button-ingresos:hover, .button-egresos:hover {
+    background-color: #45a049;
+  }
+  
