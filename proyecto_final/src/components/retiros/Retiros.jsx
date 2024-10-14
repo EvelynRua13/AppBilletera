@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import './Retiros.css';
 import { useNavigate } from 'react-router-dom';
 
-
 const Retiros = () => {
-  const [valor, setValor] = useState('');
+  const [numeroCuenta, setNumeroCuenta] = useState(''); // Campo para el número de cuenta
+  const [valor, setValor] = useState(''); // Valor del retiro
   const [error, setError] = useState(null); // Manejo de errores
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError(null); // Limpiar errores
+
+    // Validación del número de cuenta
+    if (numeroCuenta.length !== 10) {
+      setError('El número de cuenta debe tener 10 dígitos.');
+      return;
+    }
 
     // Validación del valor a retirar
     if (!valor || isNaN(valor) || Number(valor) <= 0) {
@@ -29,6 +35,21 @@ const Retiros = () => {
       <form onSubmit={handleSubmit} className="retiros-form">
         <h2>Realizar Retiro</h2>
         {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
+        
+        {/* Campo para el número de cuenta */}
+        <div className="form-group">
+          <label htmlFor="numeroCuenta">Cuenta:</label>
+          <input
+            type="text"
+            id="numeroCuenta"
+            value={numeroCuenta}
+            placeholder="Escribe el número de tu cuenta para procesar el retiro"
+            onChange={(e) => setNumeroCuenta(e.target.value)}
+            required
+          />
+        </div>
+
+        {/* Valor a Retirar */}
         <div className="form-group">
           <label htmlFor="valor">Valor a Retirar:</label>
           <input
@@ -39,6 +60,7 @@ const Retiros = () => {
             required
           />
         </div>
+
         {/* Espacio para botones */}
         {/* <button type="submit" className="confirm-button">Confirmar</button> */}
         {/* <button type="button" className="cancel-button" onClick={handleCancel}>Cancelar</button> */}
@@ -48,3 +70,4 @@ const Retiros = () => {
 };
 
 export default Retiros;
+

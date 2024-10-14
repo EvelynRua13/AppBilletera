@@ -3,32 +3,32 @@ import './Depositos.css';
 import { useNavigate } from 'react-router-dom';
 
 const Depositos = () => {
+  const [cuentaUsuario, setCuentaUsuario] = useState(''); 
   const [numeroCuenta, setNumeroCuenta] = useState('');
-  const [tipoCuenta, setTipoCuenta] = useState('ahorros'); // Valor por defecto
+  const [tipoCuenta, setTipoCuenta] = useState('ahorros'); 
   const [valor, setValor] = useState('');
-  const [error, setError] = useState(null); // Manejo de errores
+  const [error, setError] = useState(null); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(null); // Limpiar errores
+    setError(null); 
 
-    // Validación del número de cuenta (debe tener 10 dígitos)
-    if (numeroCuenta.length !== 10) {
-      setError('El número de cuenta debe tener 10 dígitos.');
+    if (cuentaUsuario.length !== 10) {
+      setError('Tu número de cuenta debe tener 10 dígitos.');
       return;
     }
 
-    // Validación del valor del depósito
+    if (numeroCuenta.length !== 10) {
+      setError('El número de cuenta destino debe tener 10 dígitos.');
+      return;
+    }
+
     if (!valor || isNaN(valor) || Number(valor) <= 0) {
       setError('Por favor, introduce un valor válido.');
       return;
     }
 
     // Aquí iría la lógica para procesar el depósito más adelante
-
-    // Espacio para botones
-    // <button type="submit" className="confirm-button">Confirmar</button>
-    // <button type="button" className="cancel-button" onClick={handleCancel}>Cancelar</button>
   };
 
   return (
@@ -37,7 +37,19 @@ const Depositos = () => {
         <h2>Realizar Depósito</h2>
         {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
         <div className="form-group">
-          <label htmlFor="numeroCuenta">Número de Cuenta:</label>
+          <label htmlFor="cuentaUsuario">Cuenta:</label>
+          <input
+            type="text"
+            id="cuentaUsuario"
+            value={cuentaUsuario}
+            placeholder="Ingresa el número de tu cuenta para realizar el depósito"
+            onChange={(e) => setCuentaUsuario(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="numeroCuenta">Número de Cuenta Destino:</label>
           <input
             type="text"
             id="numeroCuenta"
@@ -46,8 +58,9 @@ const Depositos = () => {
             required
           />
         </div>
+
         <div className="form-group">
-          <label htmlFor="tipoCuenta">Tipo de Cuenta:</label>
+          <label htmlFor="tipoCuenta">Tipo de Cuenta Destino:</label>
           <select
             id="tipoCuenta"
             value={tipoCuenta}
@@ -57,6 +70,7 @@ const Depositos = () => {
             <option value="corriente">Corriente</option>
           </select>
         </div>
+
         <div className="form-group">
           <label htmlFor="valor">Valor del Depósito:</label>
           <input
@@ -67,6 +81,7 @@ const Depositos = () => {
             required
           />
         </div>
+        
         {/* Espacio para botones */}
         {/* <button type="submit" className="confirm-button">Confirmar</button> */}
         {/* <button type="button" className="cancel-button" onClick={handleCancel}>Cancelar</button> */}
@@ -76,3 +91,4 @@ const Depositos = () => {
 };
 
 export default Depositos;
+

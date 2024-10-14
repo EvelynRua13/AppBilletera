@@ -100,8 +100,6 @@ const Registro = () => {
           </select>
         </div>
         <button type="submit" className="registro-button">Registrar</button>
-        
-        {/* Botón para volver a la página de login */}
         <button type="button" className="back-button" onClick={handleBackToLogin}>
           Volver al Login
         </button>
