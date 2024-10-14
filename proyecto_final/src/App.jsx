@@ -9,8 +9,6 @@ import Depositos from './components/depositos/Depositos'
 import Retiros from './components/retiros/Retiros'
 
 function App() {
-
-
   return (
    <Router>
       <Routes>
@@ -23,8 +21,7 @@ function App() {
         <Route path="/depositos" element={<Depositos />} />
         <Route path="/retiros" element={<Retiros />} />
       </Routes>
-    </Router>
-    
+    </Router>    
   )
 }
 

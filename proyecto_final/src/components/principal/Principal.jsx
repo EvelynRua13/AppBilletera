@@ -1,5 +1,7 @@
 import React from 'react';
 import './Principal.css'; 
+import { useNavigate } from 'react-router-dom';
+
 
 const Dashboard = () => {
   const user = {

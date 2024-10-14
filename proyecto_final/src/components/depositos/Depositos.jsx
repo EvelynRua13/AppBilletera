@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Depositos.css';
+import { useNavigate } from 'react-router-dom';
 
 const Depositos = () => {
   const [numeroCuenta, setNumeroCuenta] = useState('');

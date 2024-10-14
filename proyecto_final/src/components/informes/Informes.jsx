@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Informes.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const Informes = () => {
   const [usuarioId, setUsuarioId] = useState("12345"); // Ejemplo de ID de usuario

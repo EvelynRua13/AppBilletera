@@ -1,0 +1,15 @@
+.depositos-button {
+    background-color: #9C27B0;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .depositos-button:hover {
+    background-color: #8E24AA;
+  }
+  
