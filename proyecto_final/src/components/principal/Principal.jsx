@@ -29,20 +29,7 @@ const Dashboard = () => {
       </div>
 
       <div className="button-section">
-        {/* Espacio para botón de Transacciones */}
-        {/* <button className="transacciones-button">Transacciones</button> */}
-
-        {/* Espacio para botón de Préstamos */}
-        {/* <button className="prestamos-button">Préstamos</button> */}
-
-        {/* Espacio para botón de Retiros */}
-        {/* <button className="retiros-button">Retirar</button> */}
-
-        {/* Espacio para botón de Depósitos */}
-        {/* <button className="depositos-button">Depositar</button> */}
-
-        {/* Espacio para botón de Informes */}
-        {/* <button className="informes-button">Ir a Informes</button> */}
+       
       </div>
 
       <footer className="account-info">

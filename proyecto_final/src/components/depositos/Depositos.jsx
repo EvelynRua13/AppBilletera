@@ -83,8 +83,7 @@ const Depositos = () => {
         </div>
         
         {/* Espacio para botones */}
-        {/* <button type="submit" className="confirm-button">Confirmar</button> */}
-        {/* <button type="button" className="cancel-button" onClick={handleCancel}>Cancelar</button> */}
+       
       </form>
     </div>
   );
