@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Depositos.css';
 import { useNavigate } from 'react-router-dom';
+import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
 
 const Depositos = () => {
   const [cuentaUsuario, setCuentaUsuario] = useState(''); 
@@ -83,7 +84,7 @@ const Depositos = () => {
         </div>
         
         {/* Espacio para botones */}
-       
+       <BotonLogOut/>
       </form>
     </div>
   );
