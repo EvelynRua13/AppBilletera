@@ -43,7 +43,7 @@ const Transacciones = () => {
 
    
     // <button type="submit" className="confirm-button">Confirmar</button>
-    // <button type="button" className="cancel-button" onClick={handleCancel}>Cancelar</button>
+    // <button type="button" className="cancel-button" >Cancelar</button>
   };
 
   return (
