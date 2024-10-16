@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './Depositos.css';
 import { useNavigate } from 'react-router-dom';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
+import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
+import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
 
 const Depositos = () => {
   const [cuentaUsuario, setCuentaUsuario] = useState(''); 
@@ -9,6 +11,14 @@ const Depositos = () => {
   const [tipoCuenta, setTipoCuenta] = useState('ahorros'); 
   const [valor, setValor] = useState('');
   const [error, setError] = useState(null); 
+
+  //Limpiar campos
+  const onCancel = () => {
+    setCuentaUsuario('');
+    setNumeroCuenta('');
+    setTipoCuenta('ahorros');
+    setValor('');
+   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,7 +94,11 @@ const Depositos = () => {
         </div>
         
         {/* Espacio para botones */}
-       <BotonLogOut/>
+        <div className="button-section">
+          <BotonPrincipal/>
+          <BotonLogOut />  
+          <BotonCancelar onCancel={onCancel}/>   
+        </div>
       </form>
     </div>
   );

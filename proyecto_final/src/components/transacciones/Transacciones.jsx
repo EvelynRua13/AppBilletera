@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import './Transacciones.css'; // Importar el archivo CSS
+import './Transacciones'; // Importar el archivo CSS
 import { useNavigate } from 'react-router-dom';
 
+import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
+import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
+import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
 
 const Transacciones = () => {
   const [numeroCuentaOrigen, setNumeroCuentaOrigen] = useState('');  // Cuenta de origen
@@ -11,11 +14,11 @@ const Transacciones = () => {
   const [valor, setValor] = useState('');  // Valor de la transacción
   const [error, setError] = useState(null); // Manejo de errores
 
-  // const handleCancel = () => {
-  //   setNumeroCuentaDestino('');
-  //   setTipoCuenta('ahorros');
-  //   setValor('');
-  // };
+  const handleCancel = () => {
+    setNumeroCuentaDestino('');
+    setTipoCuenta('ahorros');
+    setValor('');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -115,6 +118,11 @@ const Transacciones = () => {
         </div>
 
         {/* Botones (Confirmar y Cancelar) */}
+        <div className="button-section">
+          <BotonPrincipal/>
+          <BotonLogOut />  
+          <BotonCancelar onClick={handleCancel}/>   
+        </div>
       
       </form>
     </div>

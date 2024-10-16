@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import './Informes.css';
 import { useNavigate } from 'react-router-dom';
 
+import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
+import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
+
 
 const Informes = () => {
   const [usuarioId, setUsuarioId] = useState("12345"); // Ejemplo de ID de usuario
@@ -93,6 +96,13 @@ const Informes = () => {
         {/* Botón para ver egresos */}
         <button onClick={handleVerEgresos} className="button-egresos">Ver Egresos</button>
       </div>
+
+    {/* Botones (Principal y logOut) */}
+    <div className="button-navigation">
+      <BotonPrincipal/>
+      <BotonLogOut /> 
+    </div>
+    
     </div>
   );
 };
