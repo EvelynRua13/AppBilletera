@@ -3,12 +3,24 @@ import './Depositos.css';
 import { useNavigate } from 'react-router-dom';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
 
+import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
+import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
+import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
+
 const Depositos = () => {
   const [cuentaUsuario, setCuentaUsuario] = useState(''); 
   const [numeroCuenta, setNumeroCuenta] = useState('');
   const [tipoCuenta, setTipoCuenta] = useState('ahorros'); 
   const [valor, setValor] = useState('');
   const [error, setError] = useState(null); 
+
+  //Limpiar campos
+  const handleCancel = () => {
+    setCuentaUsuario('');
+    setNumeroCuenta('');
+    setTipoCuenta('ahorros');
+    setValor('');
+   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,6 +96,11 @@ const Depositos = () => {
         </div>
         
         {/* Espacio para botones */}
+        <div className="button-section">
+          <BotonPrincipal/>
+          <BotonLogOut />  
+          <BotonCancelar onClick={handleCancel}/>   
+        </div>
        <BotonLogOut/>
       </form>
     </div>

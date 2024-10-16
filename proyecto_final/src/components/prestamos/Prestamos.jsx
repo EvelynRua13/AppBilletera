@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Prestamos.css';
 import { useNavigate } from 'react-router-dom';
 
+import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
+import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
+import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
 
 const Prestamos = () => {
   const [numeroCuenta, setNumeroCuenta] = useState('');
@@ -18,6 +21,15 @@ const Prestamos = () => {
     }
     return '';
   };
+
+  //Limpiar campos
+  const handleCancel = () => {
+    setNumeroCuenta('');
+    setTipoCuenta('ahorros');
+    setValor('');
+    setPlazo('');
+    setCuota('');
+   };
 
   // Efecto para actualizar la cuota cuando el valor o el plazo cambian
   useEffect(() => {
@@ -112,6 +124,12 @@ const Prestamos = () => {
         </div>
         
         {/* Espacio para botones */}
+        <div className="button-section">
+          <BotonPrincipal/>
+          <BotonLogOut />  
+          <BotonCancelar onClick={handleCancel}/>   
+        </div>
+
     
       </form>
     </div>
