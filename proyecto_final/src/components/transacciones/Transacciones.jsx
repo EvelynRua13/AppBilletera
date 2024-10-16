@@ -14,11 +14,11 @@ const Transacciones = () => {
   const [valor, setValor] = useState('');  // Valor de la transacción
   const [error, setError] = useState(null); // Manejo de errores
 
-   const handleCancel = () => {
-     setNumeroCuentaDestino('');
-     setTipoCuenta('ahorros');
-     setValor('');
-    };
+  const handleCancel = () => {
+    setNumeroCuentaDestino('');
+    setTipoCuenta('ahorros');
+    setValor('');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();

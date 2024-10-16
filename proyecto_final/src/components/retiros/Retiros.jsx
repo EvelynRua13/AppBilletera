@@ -15,7 +15,7 @@ const Retiros = () => {
     setNumeroCuenta('');
     setValor('');
    };
-   
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError(null); // Limpiar errores
@@ -75,7 +75,7 @@ const Retiros = () => {
           <BotonPrincipal/>
           <BotonLogOut />  
           <BotonCancelar onClick={handleCancel}/>   
-      </div>
+        </div>
         
       </form>
     </div>
