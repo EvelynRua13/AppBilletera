@@ -43,7 +43,13 @@ const Depositos = () => {
   };
 
   return (
+    
     <div className="depositos-container">
+          <header className='Botones'>
+        <BotonPrincipal/>
+          <BotonLogOut />  
+          <BotonCancelar onCancel={onCancel}/>   
+        </header>
       <form onSubmit={handleSubmit} className="depositos-form">
         <h2>Realizar Depósito</h2>
         {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
@@ -92,13 +98,9 @@ const Depositos = () => {
             required
           />
         </div>
+      
+       
         
-        {/* Espacio para botones */}
-        <div className="button-section">
-          <BotonPrincipal/>
-          <BotonLogOut />  
-          <BotonCancelar onCancel={onCancel}/>   
-        </div>
       </form>
     </div>
   );
