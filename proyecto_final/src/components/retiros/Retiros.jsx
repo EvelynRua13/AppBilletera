@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Retiros.css';
-import { useNavigate } from 'react-router-dom';
+
 
 import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';

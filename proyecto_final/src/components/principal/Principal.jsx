@@ -1,6 +1,5 @@
 import React from 'react';
 import './Principal.css'; 
-import { useNavigate } from 'react-router-dom';
 
 import BotonDepositos from '../../botones/BotonDepositos/BotonDepositos';
 import BotonTransacciones from '../../botones/BotonTransacciones/BotonTransacciones';
@@ -8,6 +7,7 @@ import BotonRetiros from '../../botones/BotonRetiros/BotonRetiros';
 import BotonPrestamos from '../../botones/BotonPrestamos/BotonPrestamos';
 import BotonInformes from '../../botones/BotonInformes/BotonInformes';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
+
 
 
 const Dashboard = () => {
@@ -41,7 +41,8 @@ const Dashboard = () => {
         <BotonRetiros />
         <BotonPrestamos />
         <BotonInformes />
-        <BotonLogOut />     
+        <BotonLogOut />  
+  
       </div>
 
       <footer className="account-info">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Prestamos.css';
-import { useNavigate } from 'react-router-dom';
+
 
 import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';

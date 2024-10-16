@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Informes.css';
-import { useNavigate } from 'react-router-dom';
 
 import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';

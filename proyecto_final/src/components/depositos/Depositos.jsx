@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Depositos.css';
-import { useNavigate } from 'react-router-dom';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
 import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
+import BotonDepositos from '../../botones/BotonDepositos/BotonDepositos';
 
 const Depositos = () => {
   const [cuentaUsuario, setCuentaUsuario] = useState(''); 
@@ -48,7 +48,8 @@ const Depositos = () => {
           <header className='Botones'>
         <BotonPrincipal/>
           <BotonLogOut />  
-          <BotonCancelar onCancel={onCancel}/>   
+          <BotonCancelar onCancel={onCancel}/> 
+          <BotonDepositos/>
         </header>
       <form onSubmit={handleSubmit} className="depositos-form">
         <h2>Realizar Depósito</h2>
@@ -98,9 +99,6 @@ const Depositos = () => {
             required
           />
         </div>
-      
-       
-        
       </form>
     </div>
   );
