@@ -9,7 +9,7 @@ const LogoutButton = () => {
     const confirmLogout = window.confirm('¿Estás seguro de que deseas cerrar sesión?');
     
     if (confirmLogout) {
-      navigate('/login');
+      navigate('/');
     }
   };
 

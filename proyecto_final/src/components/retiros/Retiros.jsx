@@ -2,11 +2,20 @@ import React, { useState } from 'react';
 import './Retiros.css';
 import { useNavigate } from 'react-router-dom';
 
+import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
+import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
+import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
+
 const Retiros = () => {
   const [numeroCuenta, setNumeroCuenta] = useState(''); // Campo para el número de cuenta
   const [valor, setValor] = useState(''); // Valor del retiro
   const [error, setError] = useState(null); // Manejo de errores
 
+  const handleCancel = () => {
+    setNumeroCuenta('');
+    setValor('');
+   };
+   
   const handleSubmit = (e) => {
     e.preventDefault();
     setError(null); // Limpiar errores
@@ -62,6 +71,11 @@ const Retiros = () => {
         </div>
 
         {/* Espacio para botones */}
+        <div className="button-section">
+          <BotonPrincipal/>
+          <BotonLogOut />  
+          <BotonCancelar onClick={handleCancel}/>   
+      </div>
         
       </form>
     </div>
