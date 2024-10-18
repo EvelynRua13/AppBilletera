@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Transacciones'; // Importar el archivo CSS
-import { useNavigate } from 'react-router-dom';
+
 
 import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
@@ -46,7 +46,7 @@ const Transacciones = () => {
 
    
     // <button type="submit" className="confirm-button">Confirmar</button>
-    // <button type="button" className="cancel-button" onClick={handleCancel}>Cancelar</button>
+    // <button type="button" className="cancel-button" >Cancelar</button>
   };
 
   return (

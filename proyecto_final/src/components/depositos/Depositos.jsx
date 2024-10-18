@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Depositos.css';
-import { useNavigate } from 'react-router-dom';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
 import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
+import BotonDepositos from '../../botones/BotonDepositos/BotonDepositos';
 
 const Depositos = () => {
   const [cuentaUsuario, setCuentaUsuario] = useState(''); 
@@ -13,7 +13,7 @@ const Depositos = () => {
   const [error, setError] = useState(null); 
 
   //Limpiar campos
-  const handleCancel = () => {
+  const onCancel = () => {
     setCuentaUsuario('');
     setNumeroCuenta('');
     setTipoCuenta('ahorros');
@@ -43,7 +43,14 @@ const Depositos = () => {
   };
 
   return (
+    
     <div className="depositos-container">
+          <header className='Botones'>
+        <BotonPrincipal/>
+          <BotonLogOut />  
+          <BotonCancelar onCancel={onCancel}/> 
+          <BotonDepositos/>
+        </header>
       <form onSubmit={handleSubmit} className="depositos-form">
         <h2>Realizar Depósito</h2>
         {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
@@ -92,14 +99,6 @@ const Depositos = () => {
             required
           />
         </div>
-        
-        {/* Espacio para botones */}
-        <div className="button-section">
-          <BotonPrincipal/>
-          <BotonLogOut />  
-          <BotonCancelar onClick={handleCancel}/>   
-        </div>
-       <BotonLogOut/>
       </form>
     </div>
   );
