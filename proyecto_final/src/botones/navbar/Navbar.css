@@ -1,10 +1,10 @@
 .navbar-container {font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background: linear-gradient(to bottom, white,rgb(196, 252, 252),rgb(105, 247, 247));
+    background-color: white; 
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 220vh;
-    height: 15%;
+    height: 20%;
     margin-bottom: 2.8rem;
     padding: 3rem;
   }

@@ -1,7 +1,6 @@
-
 body{
   margin: 0;
-  font -family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .dashboard-container {
@@ -9,7 +8,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(to top, #ecdbf3 14%, #9ff0ee 59%, white);
+    background-image: linear-gradient(to top, #ab11e7, #1530ac, rgb(78, 198, 228), #bfe6f8, white);
     color: #000000;
     height: 100vh;
     width: 100%;
@@ -49,7 +48,6 @@ body{
     font-size: 1.5rem;
   }
   
-  
   .account-button {
     margin-top: 20px;
     padding: 10px 30px;
@@ -60,7 +58,6 @@ body{
     cursor: pointer;
   }
   
-
   .account-button {
     margin-top: 20px;
     padding: 10px 30px;
