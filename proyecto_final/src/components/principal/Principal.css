@@ -1,9 +1,8 @@
 
 body{
   margin: 0;
-  font -family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-
 .dashboard-container {
     display: flex;
     flex-direction: column;
@@ -16,40 +15,32 @@ body{
     overflow: hidden;
 
   }
-  
   .dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
   }
-  
   .user-info {
     display: flex;
     align-items: center;
   }
-
   .balance-section {
     text-align: center;
     margin-top: 30px;
   }
-  
   .balance-title {
     font-size: 1.2rem;
     margin-bottom: 10px;
   }
-  
   .balance-amount {
     font-size: 3rem;
     font-weight: bold;
   }
-  
   .balance-total {
     margin-top: 10px;
     font-size: 1.5rem;
   }
-  
-  
   .account-button {
     margin-top: 20px;
     padding: 10px 30px;
@@ -59,8 +50,6 @@ body{
     color: #fff;
     cursor: pointer;
   }
-  
-
   .account-button {
     margin-top: 20px;
     padding: 10px 30px;
@@ -70,7 +59,6 @@ body{
     color: #fff;
     cursor: pointer;
   }
-  
   .account-info {
     margin-top: 50px;
     font-size: 1.4rem;

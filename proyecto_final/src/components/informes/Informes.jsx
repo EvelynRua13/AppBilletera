@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import './Informes.css';
 import { useNavigate } from 'react-router-dom';
-
-import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
-import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
-
+import Navbar from '../../botones/navbar/Navbar';
 
 const Informes = () => {
   const [usuarioId, setUsuarioId] = useState("12345"); // Ejemplo de ID de usuario
@@ -24,6 +21,7 @@ const Informes = () => {
 
   return (
     <div className="informes-container">
+      <Navbar />
       <h2>Informes del Usuario</h2>
       
       <div className="info-section">
@@ -99,8 +97,6 @@ const Informes = () => {
 
     {/* Botones (Principal y logOut) */}
     <div className="button-navigation">
-      <BotonPrincipal/>
-      <BotonLogOut /> 
     </div>
     
     </div>

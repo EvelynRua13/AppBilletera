@@ -4,9 +4,9 @@
     justify-content: space-around;
     align-items: center;
     width: 220vh;
-    height: 15%;
-    margin-bottom: 2.8rem;
-    padding: 3rem;
+    height: 5%;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
   }
   
   .navbar-container > * {
