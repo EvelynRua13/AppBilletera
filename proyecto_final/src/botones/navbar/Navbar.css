@@ -1,0 +1,24 @@
+.navbar-container {font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom, white,rgb(196, 252, 252),rgb(105, 247, 247));
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 220vh;
+    height: 15%;
+    margin-bottom: 2.8rem;
+    padding: 3rem;
+  }
+  
+  .navbar-container > * {
+    border: none;
+    background: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .navbar-container > *:hover {
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 4px;
+  }

@@ -36,7 +36,7 @@ const BotonIrAInformes = () => {
 
   return (
     <button className="informes-button" onClick={handleIrAInformes}>
-      Ir a Informes
+      Informes
     </button>
   );
 };
