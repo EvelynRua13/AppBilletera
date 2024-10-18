@@ -1,4 +1,3 @@
-
 body{
   margin: 0;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -8,7 +7,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(to top, #ecdbf3 14%, #9ff0ee 59%, white);
+    background-image: linear-gradient(to top, #ab11e7, #1530ac, rgb(78, 198, 228), #bfe6f8, white);
     color: #000000;
     height: 100vh;
     width: 100%;
@@ -41,6 +40,10 @@ body{
     margin-top: 10px;
     font-size: 1.5rem;
   }
+<<<<<<< HEAD
+=======
+  
+>>>>>>> a6902f3a444c42f006ab05b5a4f28c90fcbe8bd2
   .account-button {
     margin-top: 20px;
     padding: 10px 30px;
@@ -50,6 +53,10 @@ body{
     color: #fff;
     cursor: pointer;
   }
+<<<<<<< HEAD
+=======
+  
+>>>>>>> a6902f3a444c42f006ab05b5a4f28c90fcbe8bd2
   .account-button {
     margin-top: 20px;
     padding: 10px 30px;

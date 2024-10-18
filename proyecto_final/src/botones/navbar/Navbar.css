@@ -1,12 +1,18 @@
 .navbar-container {font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background: linear-gradient(to bottom, white,rgb(196, 252, 252),rgb(105, 247, 247));
+    background-color: white; 
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 220vh;
+<<<<<<< HEAD
     height: 5%;
     margin-bottom: 3rem;
     padding: 1.5rem;
+=======
+    height: 20%;
+    margin-bottom: 2.8rem;
+    padding: 3rem;
+>>>>>>> a6902f3a444c42f006ab05b5a4f28c90fcbe8bd2
   }
   
   .navbar-container > * {
