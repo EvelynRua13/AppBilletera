@@ -38,3 +38,8 @@
     margin-top: 10px;
   }
   
+  .botones{
+    background-color: #333;
+    display: flex;
+    flex: top;
+  }

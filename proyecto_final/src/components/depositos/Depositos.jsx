@@ -12,7 +12,7 @@ const Depositos = () => {
   const [error, setError] = useState(null); 
 
   //Limpiar campos
-  const handleCancel = () => {
+  const onCancel = () => {
     setCuentaUsuario('');
     setNumeroCuenta('');
     setTipoCuenta('ahorros');
@@ -42,6 +42,7 @@ const Depositos = () => {
   };
 
   return (
+    
     <div className="depositos-container">
       <Navbar />
       <form onSubmit={handleSubmit} className="depositos-form">
