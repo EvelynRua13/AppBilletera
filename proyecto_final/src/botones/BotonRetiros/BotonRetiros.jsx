@@ -11,7 +11,7 @@ const RetirosButton = () => {
 
   return (
     <button className="retiros-button" onClick={handleGoToRetiros}>
-      Ir a Retiros
+      Retiros
     </button>
   );
 };

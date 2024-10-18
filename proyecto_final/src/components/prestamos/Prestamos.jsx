@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Prestamos.css';
 
 
+import Navbar from '../../botones/navbar/Navbar';
+
 import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
-import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
 
 const Prestamos = () => {
@@ -64,6 +65,7 @@ const Prestamos = () => {
 
   return (
     <div className="prestamos-container">
+      <Navbar/>
       <form onSubmit={handleSubmit} className="prestamos-form">
         <h2>Solicitar Préstamo</h2>
         {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
@@ -125,8 +127,6 @@ const Prestamos = () => {
         
         {/* Espacio para botones */}
         <div className="button-section">
-          <BotonPrincipal/>
-          <BotonLogOut />  
           <BotonCancelar onClick={handleCancel}/>   
         </div>
 

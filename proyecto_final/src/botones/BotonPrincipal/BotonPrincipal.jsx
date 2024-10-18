@@ -15,7 +15,7 @@ const IrPaginaPrincipalButton = () => {
 
   return (
     <button className="go-to-main-button" onClick={handleGoToMainPage}>
-      Ir a Página Principal
+      Home
     </button>
   );
 };

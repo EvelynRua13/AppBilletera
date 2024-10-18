@@ -11,7 +11,7 @@ const TransaccionesButton = () => {
 
   return (
     <button className="transacciones-button" onClick={handleGoToTransacciones}>
-      Ir a Transacciones
+      Transacciones
     </button>
   );
 };

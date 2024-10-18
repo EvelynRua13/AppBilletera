@@ -11,7 +11,7 @@ const PrestamosButton = () => {
 
   return (
     <button className="prestamos-button" onClick={handleGoToPrestamos}>
-      Ir a Préstamos
+      Préstamos
     </button>
   );
 };
