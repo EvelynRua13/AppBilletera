@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Depositos.css';
 import { useNavigate } from 'react-router-dom';
+import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
 
 import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
 import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
@@ -100,7 +101,7 @@ const Depositos = () => {
           <BotonLogOut />  
           <BotonCancelar onClick={handleCancel}/>   
         </div>
-       
+       <BotonLogOut/>
       </form>
     </div>
   );
