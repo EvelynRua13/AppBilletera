@@ -49,7 +49,7 @@ const ConfirmarDepositoButton = ({ cuentaDestino, tipoCuenta, monto, onSuccess, 
 
   return (
     <button className="confirmar-button" onClick={handleConfirmarDeposito}>
-      Confirmar Depósito
+      Confirmar
     </button>
   );
 };

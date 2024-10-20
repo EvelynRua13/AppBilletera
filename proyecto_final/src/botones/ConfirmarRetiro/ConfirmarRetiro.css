@@ -1,15 +1,20 @@
 .confirmar-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(78, 198, 228);
+  color: rgb(0, 0, 0);
+  padding: 15px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: auto;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
   
-  .confirmar-button:hover {
-    background-color: #45a049;
-  }
+.confirmar-button:hover {
+  background-color: #41a7a7;
+}
   

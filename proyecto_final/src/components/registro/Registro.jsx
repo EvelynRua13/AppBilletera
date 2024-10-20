@@ -99,9 +99,9 @@ const Registro = () => {
             <option value="corriente">Corriente</option>
           </select>
         </div>
-        <button type="submit" className="registro-button">Registrar</button>
+        <button type="submit" className="registro-button">Registrarse</button>
         <button type="button" className="back-button" onClick={handleBackToLogin}>
-          Volver al Login
+          Iniciar Seción
         </button>
       </form>
     </div>

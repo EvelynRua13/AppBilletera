@@ -1,14 +1,16 @@
 .depositos-button {
-    background-color: #2fc7e2;  
-    color: white;
-    padding: 10px 20px;
+    background: none;
+    border: none;  
+    color: rgb(0, 0, 0);
+    padding: 20px 20px;
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
   
   .depositos-button:hover {
-    background-color: #8E24AA;
+    background-color: #2fc7e2;
   }
   

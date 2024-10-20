@@ -49,7 +49,7 @@ const ConfirmarRetiroButton = ({ numeroCuenta, monto, onSuccess, onError }) => {
 
   return (
     <button className="confirmar-button" onClick={handleConfirmarRetiro}>
-      Confirmar Retiro
+      Confirmar
     </button>
   );
 };

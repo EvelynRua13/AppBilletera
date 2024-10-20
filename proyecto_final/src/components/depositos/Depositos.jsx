@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './Depositos.css';
-import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
-import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
+import Navbar from '../../botones/navbar/Navbar';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
-import BotonDepositos from '../../botones/BotonDepositos/BotonDepositos';
+import ConfirmarDeposito from '../../botones/ConfirmarDeposito/ConfirmarDeposito';
 
 const Depositos = () => {
   const [cuentaUsuario, setCuentaUsuario] = useState(''); 
@@ -45,12 +44,7 @@ const Depositos = () => {
   return (
     
     <div className="depositos-container">
-          <header className='Botones'>
-        <BotonPrincipal/>
-          <BotonLogOut />  
-          <BotonCancelar onCancel={onCancel}/> 
-          <BotonDepositos/>
-        </header>
+      <Navbar />
       <form onSubmit={handleSubmit} className="depositos-form">
         <h2>Realizar Depósito</h2>
         {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
@@ -98,6 +92,11 @@ const Depositos = () => {
             onChange={(e) => setValor(e.target.value)}
             required
           />
+        </div>
+        {/* Espacio para botones */}
+        <div className="button-section">
+          <ConfirmarDeposito/>
+          <BotonCancelar onCancel={onCancel}/>   
         </div>
       </form>
     </div>

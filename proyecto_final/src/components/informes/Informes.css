@@ -2,31 +2,36 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
+    justify-content: space-between;
+    background-image: linear-gradient(to top, #810ab1, #3f5feb, rgb(78, 198, 228), #bfe6f8, white);
+    padding: 1.5px;
+    height: 115vh;
+    width: 99.8%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;;
+    margin-top: 5rem;
+    overflow: hidden;
   }
+
   
   .info-section, .historico-section, .deudas-section {
-    width: 80%;
+    width: 85%;
     margin-bottom: 20px;
     text-align: left;
   }
   
   .historico-ingresos, .historico-egresos {
-    background-color: #fff;
+    background-color: rgba(179, 81, 218, 0.4);
     padding: 10px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
   }
   
   .deudas-table {
-    width: 100%;
-    background-color: #fff;
+    width: 98%;
+    background-color: rgba(179, 81, 218, 0.4);
     padding: 10px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
   }
   
   .deudas-table table {
@@ -47,16 +52,19 @@
   }
   
   .button-ingresos, .button-egresos {
-    padding: 10px 20px;
+    justify-content: center;
+    padding: 15px 20px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
+    background-color: rgb(78, 198, 228);
+    color: rgb(0, 0, 0);
+    transition: background-color 0.3s ease;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
   
   .button-ingresos:hover, .button-egresos:hover {
-    background-color: #45a049;
+    background-color: #41a7a7;
   }
   

@@ -71,7 +71,7 @@ const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSucc
 
   return (
     <button className="confirmar-button" onClick={handleConfirmarPrestamo}>
-      Confirmar Préstamo
+      Confirmar
     </button>
   );
 };

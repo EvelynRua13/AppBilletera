@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import './Retiros.css';
-
-
-import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
-import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
+import Navbar from '../../botones/navbar/Navbar'
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
+import ConfirmarRetiro from '../../botones/ConfirmarRetiro/ConfirmarRetiro';
 
 const Retiros = () => {
   const [numeroCuenta, setNumeroCuenta] = useState(''); // Campo para el número de cuenta
@@ -41,6 +39,7 @@ const Retiros = () => {
 
   return (
     <div className="retiros-container">
+      <Navbar />
       <form onSubmit={handleSubmit} className="retiros-form">
         <h2>Realizar Retiro</h2>
         {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
@@ -72,8 +71,7 @@ const Retiros = () => {
 
         {/* Espacio para botones */}
         <div className="button-section">
-          <BotonPrincipal/>
-          <BotonLogOut />  
+          <ConfirmarRetiro/>
           <BotonCancelar onClick={handleCancel}/>   
         </div>
         
