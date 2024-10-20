@@ -7,7 +7,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: linear-gradient(to top, #ab11e7, #1530ac, rgb(78, 198, 228), #bfe6f8, white);
+    background-image: linear-gradient(to top, #810ab1, #3f5feb, rgb(78, 198, 228), #bfe6f8, white);
     color: #000000;
     height: 100vh;
     width: 100%;
@@ -19,6 +19,7 @@ body{
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    font-weight: bold;
   }
   .user-info {
     display: flex;
@@ -40,10 +41,7 @@ body{
     margin-top: 10px;
     font-size: 1.5rem;
   }
-<<<<<<< HEAD
-=======
   
->>>>>>> a6902f3a444c42f006ab05b5a4f28c90fcbe8bd2
   .account-button {
     margin-top: 20px;
     padding: 10px 30px;
@@ -53,10 +51,7 @@ body{
     color: #fff;
     cursor: pointer;
   }
-<<<<<<< HEAD
-=======
   
->>>>>>> a6902f3a444c42f006ab05b5a4f28c90fcbe8bd2
   .account-button {
     margin-top: 20px;
     padding: 10px 30px;

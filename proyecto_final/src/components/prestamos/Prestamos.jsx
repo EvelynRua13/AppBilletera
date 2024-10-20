@@ -3,6 +3,7 @@ import './Prestamos.css';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../botones/navbar/Navbar';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
+import ConfirmarPrestamo from '../../botones/ConfirmarPrestamo/ConfirmarPrestamo';
 
 const Prestamos = () => {
   const [numeroCuenta, setNumeroCuenta] = useState('');
@@ -124,6 +125,7 @@ const Prestamos = () => {
         
         {/* Espacio para botones */}
         <div className="button-section">
+          <ConfirmarPrestamo/>
           <BotonCancelar onClick={handleCancel}/>   
         </div>
 

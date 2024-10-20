@@ -2,21 +2,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
+    height: 100vh;
+    background-image: linear-gradient(to top, #810ab1, #3f5feb, rgb(78, 198, 228), #bfe6f8, white);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, sans-serif;
   }
   
   .retiros-form {
-    background-color: #fff;
-    padding: 20px;
+    background-color: rgba(179, 81, 218, 0.4);
+    padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    width: 420px;
+    margin-top: 5rem;
   }
   
   .form-group {
     margin-bottom: 15px;
+    width: 25rem;
   }
   
   .form-group label {

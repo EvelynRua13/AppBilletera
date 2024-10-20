@@ -1,22 +1,25 @@
 .registro-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(to top, #810ab1, #3f5feb, rgb(78, 198, 228), #bfe6f8, white);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  overflow: hidden;
   }
   
   .registro-form {
-    background-color: #fff;
-    padding: 20px;
+    background-color: rgba(179, 81, 218, 0.4);
+    padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    width: 420px;
   }
   
   .form-group {
     margin-bottom: 15px;
+    width: 25rem;
   }
   
   .form-group label {
@@ -32,32 +35,37 @@
   }
   
   .registro-button {
-    background-color: #4CAF50; 
-    color: white;
-    padding: 10px 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(78, 198, 228); 
+    color: rgb(0, 0, 0);
+    padding: 15px 20px;
     font-size: 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+    margin-left: 2.2rem;
+    margin-top: 10px;
   }
   
   .registro-button:hover {
-    background-color: #45a049; 
+    background-color: #41a7a7; 
   }
   
   .back-button {
-    background-color: #f44336; 
-    color: white;
-    padding: 10px 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(78, 198, 228); 
+    color: rgb(0, 0, 0);
+    padding: 15px 20px;
     font-size: 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
+    margin-left: 5rem;
     margin-top: 10px;
   }
   
   .back-button:hover {
-    background-color: #d32f2f; 
+    background-color: #41a7a7; 
   }
   
   .error-message {

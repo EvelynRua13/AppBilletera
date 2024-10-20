@@ -67,7 +67,7 @@ const ConfirmarTransaccionButton = ({ cuentaDestino, tipo, monto, cuentaOrigen, 
 
   return (
     <button className="confirmar-button" onClick={handleConfirmarTransaccion}>
-      Confirmar Transacción
+      Confirmar
     </button>
   );
 };

@@ -1,16 +1,18 @@
 .confirmar-button {
-    background-color: #2fc7e2; 
-    color: white; 
-    padding: 10px 20px; 
-    font-size: 16px; 
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-  }
+  background-color: rgb(78, 198, 228); 
+  border: none;
+  color: rgb(0, 0, 0); 
+  padding: 15px 20px; 
+  font-size: 16px;  
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin: auto;
+}
   
   .confirmar-button:hover {
-    background-color: #45a049; 
+    background-color: #41a7a7; 
   }
   
   .confirmar-button:focus {

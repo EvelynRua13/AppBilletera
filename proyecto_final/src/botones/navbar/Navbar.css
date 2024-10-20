@@ -1,30 +1,24 @@
-.navbar-container {font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: white; 
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 220vh;
-<<<<<<< HEAD
-    height: 5%;
-    margin-bottom: 3rem;
-    padding: 1.5rem;
-=======
-    height: 20%;
-    margin-bottom: 2.8rem;
-    padding: 3rem;
->>>>>>> a6902f3a444c42f006ab05b5a4f28c90fcbe8bd2
-  }
-  
-  .navbar-container > * {
-    border: none;
-    background: none;
-    padding: 0.5rem 1rem;
-    margin: 0 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.navbar-container {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  background-color: rgba(169, 220, 231, 0.8); /* Fondo blanco con 80% de opacidad */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed; 
+  width: 220vh; 
+  height: 60px; 
+  padding: 1rem;      
+  top: 0; 
+  left: 0;    
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.4); 
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
 
-  .navbar-container > *:hover {
-    background-color: rgba(0,0,0,0.05);
-    border-radius: 4px;
-  }
+.navbar-container > * {
+  border: none;
+  background: none;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}

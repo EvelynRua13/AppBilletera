@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import './Transacciones'; // Importar el archivo CSS
-
-
-import BotonPrincipal from '../../botones/BotonPrincipal/BotonPrincipal';
-import BotonLogOut from '../../botones/BotonLogOut/BotonLogOut';
+import './Transacciones.css'; // Importar el archivo CSS
+import Navbar from '../../botones/navbar/Navbar'
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
+import ConfirmarTransaccion from '../../botones/ConfirmarTransaccion/ConfirmarTransaccion';
 
 const Transacciones = () => {
   const [numeroCuentaOrigen, setNumeroCuentaOrigen] = useState('');  // Cuenta de origen
@@ -51,6 +49,7 @@ const Transacciones = () => {
 
   return (
     <div className="transacciones-container">
+      <Navbar /> 
       <form onSubmit={handleSubmit} className="transacciones-form">
         <h2>Realizar Transacción</h2>
         {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
@@ -118,9 +117,8 @@ const Transacciones = () => {
         </div>
 
         {/* Botones (Confirmar y Cancelar) */}
-        <div className="button-section">
-          <BotonPrincipal/>
-          <BotonLogOut />  
+        <div className="button-section"> 
+          <ConfirmarTransaccion/>
           <BotonCancelar onClick={handleCancel}/>   
         </div>
       

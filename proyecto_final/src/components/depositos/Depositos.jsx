@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Depositos.css';
-import { useNavigate } from 'react-router-dom';
 import Navbar from '../../botones/navbar/Navbar';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
+import ConfirmarDeposito from '../../botones/ConfirmarDeposito/ConfirmarDeposito';
 
 const Depositos = () => {
   const [cuentaUsuario, setCuentaUsuario] = useState(''); 
@@ -95,7 +95,8 @@ const Depositos = () => {
         </div>
         {/* Espacio para botones */}
         <div className="button-section">
-          <BotonCancelar onClick={handleCancel}/>   
+          <ConfirmarDeposito/>
+          <BotonCancelar onCancel={onCancel}/>   
         </div>
       </form>
     </div>
