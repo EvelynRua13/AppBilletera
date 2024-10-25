@@ -1,13 +1,18 @@
-// Importa Express y Axios
 import express from 'express';
 import cors from 'cors';
+import RegistrarRuta from'./Rutas/RegistrarRuta.js'
+import dotenv from 'dotenv';
+dotenv.config();
 
-// Instancia de express
 const app = express();
+app.use(express.json()); 
+app.use(cors())
 
-app.use(cors());
+app.get('/', (req, res) => {
+  res.send('Bienvenido al API del Banco'); 
+});
 
-// Configura el puerto
+app.use('/api', RegistrarRuta); 
 app.set('port', process.env.PORT || 3000);
 
 export default app;
