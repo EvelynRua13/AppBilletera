@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'; 
 import './ConfirmarDeposito.css'; 
 
-const ConfirmarDepositoButton = ({ cuentaDestino, tipoCuenta, monto, onSuccess, onError}) => {
+const ConfirmarDepositoButton = ({ cuentaDestino, monto, onSuccess, onError}) => {
   const handleConfirmarDeposito = async () => {
     if (!monto || isNaN(monto) || Number(monto) <= 0) {
       onError('Por favor, introduce un monto válido.');
@@ -10,7 +10,7 @@ const ConfirmarDepositoButton = ({ cuentaDestino, tipoCuenta, monto, onSuccess, 
     }
 
     // Lógica comentada para registrar el depósito en la base de datos
-    /*
+    
     try {
       // 1. Agregar la transacción a la tabla de Transacciones
       await fetch('/api/transacciones', {
@@ -44,7 +44,7 @@ const ConfirmarDepositoButton = ({ cuentaDestino, tipoCuenta, monto, onSuccess, 
       console.error('Error en el depósito:', error);
       onError('Error al conectar con el servidor.');
     }
-    */
+    
   };
 
   return (
