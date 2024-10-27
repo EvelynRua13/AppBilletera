@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import { useAuth } from '../../Utils/Context'; // Asegúrate de importar el contexto
+import { useAuth } from '../../Utils/Context'; 
 import './LogOut.css';
 
 const LogoutButton = () => {
