@@ -107,7 +107,7 @@ const Registro = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="numeroCuenta">Número de Cuenta:</label>
+          <label htmlFor="numeroCuenta">Número de Celular:</label>
           <input
             type="text"
             id="numeroCuenta"
