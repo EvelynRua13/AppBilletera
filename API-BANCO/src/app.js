@@ -3,6 +3,9 @@ import cors from 'cors';
 import RegistrarRuta from'./Rutas/RegistrarRuta.js'
 import LoginRuta from './Rutas/LoginRuta.js'
 import userRoutes from './Rutas/userRoutes.js';
+import transaccionesRuta from './Rutas/transaccionesRuta.js';
+import ingresosRuta from './Rutas/ingresosRuta.js';
+import egresosRuta from './Rutas/egresosRuta.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -17,6 +20,9 @@ app.get('/', (req, res) => {
 app.use('/api', RegistrarRuta); 
 app.use('/api', LoginRuta); 
 app.use('/api', userRoutes);
+app.use('/api', transaccionesRuta)
+app.use('/api', ingresosRuta)
+app.use('/api', egresosRuta)
 
 app.set('port', process.env.PORT || 3000);
 
