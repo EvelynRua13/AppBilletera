@@ -1,68 +1,89 @@
 import React from 'react';
-import PropTypes from 'prop-types'; // Importar PropTypes
-import './ConfirmarTransaccion.css'; // Importar CSS
+import PropTypes from 'prop-types';
+import './ConfirmarTransaccion.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Utils/Context';
 
-const ConfirmarTransaccionButton = ({ cuentaDestino, tipo, monto, cuentaOrigen, usuarioIdDestino, usuarioIdOrigen, onSuccess, onError }) => {
-  
+const ConfirmarTransaccionButton = ({ cuentaDestino, monto, cuentaOrigen, onSuccess, onError }) => {
   const navigate = useNavigate();
+  const { token, refreshUser } = useAuth();
 
   const handleConfirmarTransaccion = async () => {
-    if (!monto || isNaN(monto) || Number(monto) <= 0) {
+    const montoNum = Number(monto);
+    if (!montoNum || isNaN(montoNum) || montoNum <= 0) {
       onError('Por favor, introduce un monto válido.');
       return;
     }
 
-    // Lógica comentada para registrar la transacción en la base de datos
-    /*
     try {
-      // 1. Agregar la transacción a la tabla de Transacciones
-      await fetch('/api/transacciones', {
+      // 1. Agregar la transacción
+      let response = await fetch('http://localhost:3000/api/transacciones', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          cuenta_id: cuentaDestino, // ID de la cuenta destino
-          tipo: 'Transferencia',               // Tipo de transacción (transferencia, depósito, retiro)
-          monto: monto,             // Monto de la transacción
-          fecha: new Date(),        // Fecha actual
+          cuentaOrigen: cuentaOrigen,
+          cuentaDestino: cuentaDestino,
+          tipo: 'transferencia',
+          monto: montoNum,
+          fecha: new Date().toISOString(),
         }),
       });
 
-      // 2. Agregar el ingreso a la tabla de Ingresos
-      await fetch('/api/ingresos', {
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al agregar la transacción');
+      }
+
+      // 2. Agregar el ingreso
+      response = await fetch('http://localhost:3000/api/ingresos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          usuario_id: usuarioIdDestino, // ID de la cuenta destino
-          monto: monto,                  // Monto de ingreso
-          fecha: new Date(),             // Fecha actual
+          cuentaDestino: cuentaDestino,
+          monto: montoNum,
+          fecha: new Date().toISOString(),
         }),
       });
 
-      // 3. Agregar el egreso a la tabla de Egresos
-      await fetch('/api/egresos', {
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al agregar el ingreso');
+      }
+
+      // 3. Agregar el egreso
+      response = await fetch('http://localhost:3000/api/egresos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          usuario_id: usuarioIdOrigen, // ID de la cuenta origen
-          monto: monto,                 // Monto de egreso
-          fecha: new Date(),            // Fecha actual
+          cuentaOrigen: cuentaOrigen,
+          monto: montoNum,
+          fecha: new Date().toISOString(),
         }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al agregar el egreso');
+      }
+
+      // 4. Actualizar los datos del usuario
+      await refreshUser();
+      
       onSuccess('Transacción realizada con éxito.');
-      navigate('/dashboard'); // Redirigir al dashboard
+      navigate('/principal');
     } catch (error) {
       console.error('Error en la transacción:', error);
-      onError('Error al conectar con el servidor.');
+      onError('Error al conectar con el servidor: ' + error.message);
     }
-    */
   };
 
   return (
@@ -72,14 +93,10 @@ const ConfirmarTransaccionButton = ({ cuentaDestino, tipo, monto, cuentaOrigen, 
   );
 };
 
-// Validación de PropTypes
 ConfirmarTransaccionButton.propTypes = {
-  cuentaDestino: PropTypes.string.isRequired, // ID de la cuenta destino
-  tipo: PropTypes.string.isRequired,           // Tipo de transacción
-  monto: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Monto de la transacción
-  cuentaOrigen: PropTypes.string.isRequired,   // ID de la cuenta origen
-  usuarioIdDestino: PropTypes.string.isRequired, // ID del usuario destino
-  usuarioIdOrigen: PropTypes.string.isRequired, // ID del usuario origen
+  cuentaDestino: PropTypes.string.isRequired,
+  monto: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  cuentaOrigen: PropTypes.string.isRequired,
   onSuccess: PropTypes.func.isRequired,
   onError: PropTypes.func.isRequired,
 };

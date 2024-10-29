@@ -1,49 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './Principal.css';
 import Navbar from '../../botones/navbar/Navbar';
 import { useAuth } from '../../Utils/Context';
 
 const Dashboard = () => {
-  const {user, token } = useAuth(); // Obtener solo user y token
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { user, loading: authLoading, error: authError } = useAuth();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!token) return; // Si no hay token, no hacemos nada
-
-      try {
-        const response = await fetch('http://localhost:3000/api/user', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`, // Usa el token del contexto
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Error al cargar los datos del usuario.');
-        }
-
-        const data = await response.json();
-        setUserData(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, [token]); // Cambia a token en lugar de user
-
-  if (loading) {
-    return <p>Cargando datos del usuario...</p>;
+  // Componente de carga
+  if (authLoading) {
+    return (
+      <div className="dashboard-container">
+        <Navbar />
+        <div className="loading-state">
+          <p>Cargando datos del usuario...</p>
+        </div>
+      </div>
+    );
   }
 
-  if (error) {
-    return <p>Error: {error}</p>;
+  // Manejo de error
+  if (authError) {
+    return (
+      <div className="dashboard-container">
+        <Navbar />
+        <div className="error-state">
+          <p>Error: {authError}</p>
+          <button 
+            className="retry-button"
+            onClick={() => window.location.reload()}
+          >
+            Reintentar
+          </button>
+        </div>
+      </div>
+    );
   }
+
+  // Si no hay usuario autenticado
+  if (!user) {
+    return (
+      <div className="dashboard-container">
+        <Navbar />
+        <div className="error-state">
+          <p>Por favor, inicie sesión para ver sus datos.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Formatear números para mostrar
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount || 0);
+  };
 
   return (
     <div className="dashboard-container">
@@ -51,22 +64,38 @@ const Dashboard = () => {
 
       <header className="dashboard-header">
         <div className="user-info">
-          <p>Hola, {user?.nombre}</p> {/* Usa optional chaining para evitar errores */}
+          <p className="user-name">Bienvenido(a) {user.nombre || 'Usuario'}</p>
         </div>
       </header>
 
       <div className="balance-section">
-        <p className="balance-title">Depósito Bajo Monto</p>
-        <h1 className="balance-amount">${userData?.saldo?.toLocaleString() || 0}</h1> {/* Maneja el caso donde userData o saldo no están definidos */}
-        <p className="balance-total">Total ${userData?.saldo?.toLocaleString() || 0}</p>
+        <div className="balance-card">
+          <p className="balance-title">Depósito Bajo Monto</p>
+          <h2 className="balance-amount">
+            {formatCurrency(user.saldo)}
+          </h2>
+          <p className="balance-total">
+            Total {formatCurrency(user.saldo)}
+          </p>
+        </div>
+
+        <div className="account-details">
+          <div className="detail-item">
+            <span className="detail-label">Número de Cuenta:</span>
+            <span className="detail-value">{user.numero_cuenta || 'No disponible'}</span>
+          </div>
+          <div className="detail-item">
+            <span className="detail-label">Tipo de Cuenta:</span>
+            <span className="detail-value">{user.tipo || 'No especificado'}</span>
+          </div>
+        </div>
       </div>
 
-      <footer className="account-info">
-        <p>Número de Cuenta: {userData?.numero_cuenta}</p> {/* Usa optional chaining */}
+      <footer className="dashboard-footer">
+        <p>Última actualización: {new Date().toLocaleString()}</p>
       </footer>
     </div>
   );
 };
 
 export default Dashboard;
-

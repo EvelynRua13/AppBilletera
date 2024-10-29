@@ -1,63 +1,99 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Retiros.css';
-import Navbar from '../../botones/navbar/Navbar'
+import Navbar from '../../botones/navbar/Navbar';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
 import ConfirmarRetiro from '../../botones/ConfirmarRetiro/ConfirmarRetiro';
+import { useAuth } from '../../Utils/Context';
 
 const Retiros = () => {
-  const [numeroCuenta, setNumeroCuenta] = useState(''); // Campo para el número de cuenta
-  const [valor, setValor] = useState(''); // Valor del retiro
-  const [error, setError] = useState(null); // Manejo de errores
+  const { user, loading: authLoading } = useAuth();
+  const [numeroCuenta, setNumeroCuenta] = useState('');
+  const [tipoCuenta, setTipoCuenta] = useState('');
+  const [valor, setValor] = useState('');
+  const [error, setError] = useState(null);
+
+  // Actualizar los datos cuando el usuario está disponible
+  useEffect(() => {
+    if (user) {
+      setNumeroCuenta(user.numero_cuenta || '');
+      setTipoCuenta(user.tipo || 'ahorros');
+    }
+  }, [user]);
 
   const handleCancel = () => {
-    setNumeroCuenta('');
     setValor('');
-   };
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(null); // Limpiar errores
+    setError(null);
 
-    // Validación del número de cuenta
     if (numeroCuenta.length !== 10) {
       setError('El número de cuenta debe tener 10 dígitos.');
       return;
     }
 
-    // Validación del valor a retirar
     if (!valor || isNaN(valor) || Number(valor) <= 0) {
       setError('Por favor, introduce un valor válido para el retiro.');
       return;
     }
 
-    // Aquí iría la lógica para procesar el retiro más adelante
-
-    // Espacio para botones
-    // <button type="submit" className="confirm-button">Confirmar</button>
-    // <button type="button" className="cancel-button" onClick={handleCancel}>Cancelar</button>
+    // La lógica de retiro se maneja en el componente ConfirmarRetiro
   };
+
+  // Mostrar mensaje de carga mientras se obtienen los datos del usuario
+  if (authLoading && !user) {
+    return (
+      <div className="retiros-container">
+        <Navbar />
+        <div className="loading-message">
+          <p>Cargando datos de la cuenta...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar mensaje de error si no hay usuario
+  if (!user) {
+    return (
+      <div className="retiros-container">
+        <Navbar />
+        <div className="error-message">
+          <p>Error: No se pudo cargar la información de la cuenta. Por favor, inicie sesión nuevamente.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="retiros-container">
       <Navbar />
       <form onSubmit={handleSubmit} className="retiros-form">
         <h2>Realizar Retiro</h2>
-        {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
+        {error && <p className="error-message">{error}</p>}
         
-        {/* Campo para el número de cuenta */}
         <div className="form-group">
           <label htmlFor="numeroCuenta">Cuenta:</label>
           <input
             type="text"
             id="numeroCuenta"
             value={numeroCuenta}
-            placeholder="Escribe el número de tu cuenta para procesar el retiro"
-            onChange={(e) => setNumeroCuenta(e.target.value)}
-            required
+            disabled
           />
         </div>
 
-        {/* Valor a Retirar */}
+        <div className="form-group">
+          <label htmlFor="tipoCuenta">Tipo de Cuenta:</label>
+          <select
+            id="tipoCuenta"
+            value={tipoCuenta}
+            disabled
+          >
+            <option value="ahorros">Ahorros</option>
+            <option value="corriente">Corriente</option>
+          </select>
+        </div>
+
         <div className="form-group">
           <label htmlFor="valor">Valor a Retirar:</label>
           <input
@@ -69,16 +105,19 @@ const Retiros = () => {
           />
         </div>
 
-        {/* Espacio para botones */}
         <div className="button-section">
-          <ConfirmarRetiro/>
-          <BotonCancelar onClick={handleCancel}/>   
+          <ConfirmarRetiro
+            numeroCuenta={numeroCuenta}
+            tipoCuenta={tipoCuenta}
+            monto={valor}
+            onSuccess={() => setError(null)}
+            onError={setError}
+          />
+          <BotonCancelar onCancel={handleCancel} />   
         </div>
-        
       </form>
     </div>
   );
 };
 
 export default Retiros;
-

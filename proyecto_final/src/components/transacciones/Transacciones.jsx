@@ -1,85 +1,106 @@
-import React, { useState } from 'react';
-import './Transacciones.css'; // Importar el archivo CSS
-import Navbar from '../../botones/navbar/Navbar'
+import React, { useEffect, useState } from 'react';
+import './Transacciones.css';
+import Navbar from '../../botones/navbar/Navbar';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
 import ConfirmarTransaccion from '../../botones/ConfirmarTransaccion/ConfirmarTransaccion';
+import { useAuth } from '../../Utils/Context';
 
 const Transacciones = () => {
-  const [numeroCuentaOrigen, setNumeroCuentaOrigen] = useState('');  // Cuenta de origen
-  const [tipoCuentaOrigen, setTipoCuentaOrigen] = useState('ahorros');  // Tipo de cuenta de origen
-  const [numeroCuentaDestino, setNumeroCuentaDestino] = useState('');  // Cuenta destino
-  const [tipoCuentaDestino, setTipoCuentaDestino] = useState('ahorros');  // Tipo de cuenta destino
-  const [valor, setValor] = useState('');  // Valor de la transacción
-  const [error, setError] = useState(null); // Manejo de errores
+  const { token, user, loading: authLoading } = useAuth();
+  const [numeroCuentaOrigen, setNumeroCuentaOrigen] = useState('');
+  const [tipoCuentaOrigen, setTipoCuentaOrigen] = useState('');
+  const [numeroCuentaDestino, setNumeroCuentaDestino] = useState('');
+  const [tipoCuentaDestino, setTipoCuentaDestino] = useState('ahorros');
+  const [valor, setValor] = useState('');
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Si tenemos los datos del usuario, actualizar los campos
+    if (user) {
+      setNumeroCuentaOrigen(user.numero_cuenta || '');
+      setTipoCuentaOrigen(user.tipo || '');
+    }
+  }, [user]);
 
   const handleCancel = () => {
     setNumeroCuentaDestino('');
-    setTipoCuenta('ahorros');
+    setTipoCuentaDestino('ahorros');
     setValor('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(null); // Limpiar errores
+    setError(null);
 
-    // Validación de la cuenta de origen
     if (numeroCuentaOrigen.length !== 10) {
       setError('El número de cuenta origen debe tener 10 dígitos.');
       return;
     }
 
-    // Validación de la cuenta destino
     if (numeroCuentaDestino.length !== 10) {
       setError('El número de cuenta destino debe tener 10 dígitos.');
       return;
     }
 
-    // Validación del valor de la transacción
     if (!valor || isNaN(valor) || Number(valor) <= 0) {
       setError('Por favor, introduce un valor válido.');
       return;
     }
-
-    // Aquí iría la lógica para procesar la transacción más adelante
-
-   
-    // <button type="submit" className="confirm-button">Confirmar</button>
-    // <button type="button" className="cancel-button" >Cancelar</button>
   };
+
+  // Solo mostrar carga cuando realmente estamos esperando datos de autenticación
+  if (authLoading && !user) {
+    return (
+      <div className="transacciones-container">
+        <Navbar />
+        <div className="loading-message">
+          <p>Cargando datos de la cuenta...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Si no hay token o usuario, mostrar error
+  if (!token || !user) {
+    return (
+      <div className="transacciones-container">
+        <Navbar />
+        <div className="error-message">
+          <p>Error: No se pudo cargar la información de la cuenta. Por favor, inicie sesión nuevamente.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="transacciones-container">
-      <Navbar /> 
+      <Navbar />
       <form onSubmit={handleSubmit} className="transacciones-form">
         <h2>Realizar Transacción</h2>
-        {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
-        
-        {/* Número de Cuenta Origen */}
+        {error && <p className="error-message">{error}</p>}
+
         <div className="form-group">
           <label htmlFor="numeroCuentaOrigen">Número de Cuenta Origen:</label>
           <input
             type="text"
             id="numeroCuentaOrigen"
             value={numeroCuentaOrigen}
-            onChange={(e) => setNumeroCuentaOrigen(e.target.value)}
-            required
+            disabled
           />
         </div>
-        
-        {/* Tipo de Cuenta Origen */}
+
         <div className="form-group">
           <label htmlFor="tipoCuentaOrigen">Tipo de Cuenta Origen:</label>
           <select
             id="tipoCuentaOrigen"
             value={tipoCuentaOrigen}
-            onChange={(e) => setTipoCuentaOrigen(e.target.value)}
+            disabled
           >
             <option value="ahorros">Ahorros</option>
             <option value="corriente">Corriente</option>
           </select>
         </div>
 
-        {/* Número de Cuenta Destino */}
         <div className="form-group">
           <label htmlFor="numeroCuentaDestino">Número de Cuenta Destino:</label>
           <input
@@ -91,7 +112,6 @@ const Transacciones = () => {
           />
         </div>
 
-        {/* Tipo de Cuenta Destino */}
         <div className="form-group">
           <label htmlFor="tipoCuentaDestino">Tipo de Cuenta Destino:</label>
           <select
@@ -104,7 +124,6 @@ const Transacciones = () => {
           </select>
         </div>
 
-        {/* Valor de la Transacción */}
         <div className="form-group">
           <label htmlFor="valor">Valor de la Transacción:</label>
           <input
@@ -116,16 +135,20 @@ const Transacciones = () => {
           />
         </div>
 
-        {/* Botones (Confirmar y Cancelar) */}
-        <div className="button-section"> 
-          <ConfirmarTransaccion/>
-          <BotonCancelar onClick={handleCancel}/>   
+        <div className="button-section">
+          <ConfirmarTransaccion
+            cuentaDestino={numeroCuentaDestino}
+            tipo={tipoCuentaDestino}
+            monto={valor}
+            cuentaOrigen={numeroCuentaOrigen}
+            onSuccess={() => setError(null)}
+            onError={setError}
+          />
+          <BotonCancelar onCancel={handleCancel} />
         </div>
-      
       </form>
     </div>
   );
 };
 
 export default Transacciones;
-

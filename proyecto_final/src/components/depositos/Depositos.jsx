@@ -1,35 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Depositos.css';
 import Navbar from '../../botones/navbar/Navbar';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
 import ConfirmarDeposito from '../../botones/ConfirmarDeposito/ConfirmarDeposito';
+import { useAuth } from '../../Utils/Context';
 
 const Depositos = () => {
-  const [cuentaUsuario, setCuentaUsuario] = useState(''); 
+  const { user, loading: authLoading } = useAuth();
   const [numeroCuenta, setNumeroCuenta] = useState('');
-  const [tipoCuenta, setTipoCuenta] = useState('ahorros'); 
+  const [tipoCuenta, setTipoCuenta] = useState('');
   const [valor, setValor] = useState('');
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
 
-  //Limpiar campos
+  // Actualizar los datos cuando el usuario está disponible
+  useEffect(() => {
+    if (user) {
+      setNumeroCuenta(user.numero_cuenta || '');
+      setTipoCuenta(user.tipo || 'ahorros');
+    }
+  }, [user]);
+
+  // Limpiar campos
   const onCancel = () => {
-    setCuentaUsuario('');
-    setNumeroCuenta('');
-    setTipoCuenta('ahorros');
     setValor('');
-   };
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(null); 
-
-    if (cuentaUsuario.length !== 10) {
-      setError('Tu número de cuenta debe tener 10 dígitos.');
-      return;
-    }
+    setError(null);
 
     if (numeroCuenta.length !== 10) {
-      setError('El número de cuenta destino debe tener 10 dígitos.');
+      setError('El número de cuenta debe tener 10 dígitos.');
       return;
     }
 
@@ -37,46 +38,55 @@ const Depositos = () => {
       setError('Por favor, introduce un valor válido.');
       return;
     }
-
-    // Aquí iría la lógica para procesar el depósito más adelante
   };
 
+  // Mostrar mensaje de carga mientras se obtienen los datos del usuario
+  if (authLoading && !user) {
+    return (
+      <div className="depositos-container">
+        <Navbar />
+        <div className="loading-message">
+          <p>Cargando datos de la cuenta...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar mensaje de error si no hay usuario
+  if (!user) {
+    return (
+      <div className="depositos-container">
+        <Navbar />
+        <div className="error-message">
+          <p>Error: No se pudo cargar la información de la cuenta. Por favor, inicie sesión nuevamente.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    
     <div className="depositos-container">
       <Navbar />
       <form onSubmit={handleSubmit} className="depositos-form">
         <h2>Realizar Depósito</h2>
-        {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
-        <div className="form-group">
-          <label htmlFor="cuentaUsuario">Cuenta:</label>
-          <input
-            type="text"
-            id="cuentaUsuario"
-            value={cuentaUsuario}
-            placeholder="Ingresa el número de tu cuenta para realizar el depósito"
-            onChange={(e) => setCuentaUsuario(e.target.value)}
-            required
-          />
-        </div>
+        {error && <p className="error-message">{error}</p>}
 
         <div className="form-group">
-          <label htmlFor="numeroCuenta">Número de Cuenta Destino:</label>
+          <label htmlFor="numeroCuenta">Número de Cuenta:</label>
           <input
             type="text"
             id="numeroCuenta"
             value={numeroCuenta}
-            onChange={(e) => setNumeroCuenta(e.target.value)}
-            required
+            disabled
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="tipoCuenta">Tipo de Cuenta Destino:</label>
+          <label htmlFor="tipoCuenta">Tipo de Cuenta:</label>
           <select
             id="tipoCuenta"
             value={tipoCuenta}
-            onChange={(e) => setTipoCuenta(e.target.value)}
+            disabled
           >
             <option value="ahorros">Ahorros</option>
             <option value="corriente">Corriente</option>
@@ -93,10 +103,16 @@ const Depositos = () => {
             required
           />
         </div>
-        {/* Espacio para botones */}
+
         <div className="button-section">
-          <ConfirmarDeposito/>
-          <BotonCancelar onCancel={onCancel}/>   
+          <ConfirmarDeposito
+            numeroCuenta={numeroCuenta}
+            tipoCuenta={tipoCuenta}
+            monto={valor}
+            onSuccess={() => setError(null)}
+            onError={setError}
+          />
+          <BotonCancelar onCancel={onCancel} />
         </div>
       </form>
     </div>
@@ -104,4 +120,3 @@ const Depositos = () => {
 };
 
 export default Depositos;
-

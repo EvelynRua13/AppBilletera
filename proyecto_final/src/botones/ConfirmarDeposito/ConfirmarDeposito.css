@@ -18,4 +18,15 @@
   .confirmar-button:focus {
     outline: none; 
   }
+
+  .confirmar-button.loading {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  .confirmar-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
   

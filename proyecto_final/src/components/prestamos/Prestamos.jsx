@@ -1,34 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import './Prestamos.css';
-import { useNavigate } from 'react-router-dom';
 import Navbar from '../../botones/navbar/Navbar';
 import BotonCancelar from '../../botones/BotonCancelar/BotonCancelar';
 import ConfirmarPrestamo from '../../botones/ConfirmarPrestamo/ConfirmarPrestamo';
+import { useAuth } from '../../Utils/Context';
 
 const Prestamos = () => {
+  const { user, loading: authLoading } = useAuth();
   const [numeroCuenta, setNumeroCuenta] = useState('');
-  const [tipoCuenta, setTipoCuenta] = useState('ahorros'); // Valor por defecto
+  const [tipoCuenta, setTipoCuenta] = useState('ahorros');
   const [valor, setValor] = useState('');
   const [plazo, setPlazo] = useState('');
   const [cuota, setCuota] = useState('');
-  const [error, setError] = useState(null); // Manejo de errores
+  const [error, setError] = useState(null);
+
+  // Actualizar los datos cuando el usuario está disponible
+  useEffect(() => {
+    if (user) {
+      setNumeroCuenta(user.numero_cuenta || '');
+      setTipoCuenta(user.tipo || 'ahorros');
+    }
+  }, [user]);
 
   // Función para calcular la cuota
   const calcularCuota = (valorPrestamo, plazoMeses) => {
     if (valorPrestamo && plazoMeses && !isNaN(valorPrestamo) && !isNaN(plazoMeses)) {
-      return ((Number(valorPrestamo) / Number(plazoMeses))).toFixed(2); // Formato con 2 decimales
+      return ((Number(valorPrestamo) / Number(plazoMeses))).toFixed(2);
     }
     return '';
   };
 
-  //Limpiar campos
+  // Limpiar campos - solo los editables
   const handleCancel = () => {
-    setNumeroCuenta('');
-    setTipoCuenta('ahorros');
     setValor('');
     setPlazo('');
     setCuota('');
-   };
+  };
 
   // Efecto para actualizar la cuota cuando el valor o el plazo cambian
   useEffect(() => {
@@ -38,35 +45,49 @@ const Prestamos = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(null); // Limpiar errores
+    setError(null);
 
-    // Validación del número de cuenta (debe tener 10 dígitos)
-    if (numeroCuenta.length !== 10) {
-      setError('El número de cuenta debe tener 10 dígitos.');
-      return;
-    }
-
-    // Validación del valor del préstamo
     if (!valor || isNaN(valor) || Number(valor) <= 0) {
-      setError('Por favor, introduce un valor válido.');
+      setError('Por favor, introduce un valor válido para el préstamo.');
       return;
     }
 
-    // Validación del plazo en meses
     if (!plazo || isNaN(plazo) || Number(plazo) <= 0) {
       setError('Por favor, introduce un plazo en meses válido.');
       return;
     }
-
-    // Aquí iría la lógica para procesar el préstamo más adelante
   };
+
+  // Mostrar mensaje de carga mientras se obtienen los datos del usuario
+  if (authLoading && !user) {
+    return (
+      <div className="prestamos-container">
+        <Navbar />
+        <div className="loading-message">
+          <p>Cargando datos de la cuenta...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar mensaje de error si no hay usuario
+  if (!user) {
+    return (
+      <div className="prestamos-container">
+        <Navbar />
+        <div className="error-message">
+          <p>Error: No se pudo cargar la información de la cuenta. Por favor, inicie sesión nuevamente.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="prestamos-container">
-      <Navbar/>
+      <Navbar />
       <form onSubmit={handleSubmit} className="prestamos-form">
         <h2>Solicitar Préstamo</h2>
-        {error && <p className="error-message">{error}</p>} {/* Mostrar mensaje de error */}
+        {error && <p className="error-message">{error}</p>}
         
         <div className="form-group">
           <label htmlFor="numeroCuenta">Número de Cuenta:</label>
@@ -74,8 +95,7 @@ const Prestamos = () => {
             type="text"
             id="numeroCuenta"
             value={numeroCuenta}
-            onChange={(e) => setNumeroCuenta(e.target.value)}
-            required
+            disabled
           />
         </div>
         
@@ -84,7 +104,7 @@ const Prestamos = () => {
           <select
             id="tipoCuenta"
             value={tipoCuenta}
-            onChange={(e) => setTipoCuenta(e.target.value)}
+            disabled
           >
             <option value="ahorros">Ahorros</option>
             <option value="corriente">Corriente</option>
@@ -119,17 +139,23 @@ const Prestamos = () => {
             type="text"
             id="cuota"
             value={cuota}
-            readOnly // Campo no editable
+            readOnly
+            className="read-only-input"
           />
         </div>
         
-        {/* Espacio para botones */}
         <div className="button-section">
-          <ConfirmarPrestamo/>
-          <BotonCancelar onClick={handleCancel}/>   
+          <ConfirmarPrestamo
+            numeroCuenta={numeroCuenta}
+            tipoCuenta={tipoCuenta}
+            monto={valor}
+            plazo={plazo}
+            cuota={cuota}
+            onSuccess={() => setError(null)}
+            onError={setError}
+          />
+          <BotonCancelar onCancel={handleCancel} />   
         </div>
-
-    
       </form>
     </div>
   );
