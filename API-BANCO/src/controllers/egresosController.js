@@ -17,7 +17,7 @@ export const agregarEgreso = async (req, res) => {
         
         // 1. Agregar egreso a la tabla de Egresos
         await connection.query(
-            'INSERT INTO Egresos (usuario_id, monto, fecha) VALUES (?, ?, ?)',
+            'INSERT INTO egresos (usuario_id, monto, fecha) VALUES (?, ?, ?)',
             [cuentaOrigen, monto, new Date()] // Asegúrate de que usuario_id sea correcto
         );
 
