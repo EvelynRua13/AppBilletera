@@ -28,6 +28,9 @@ const Retiros = () => {
     e.preventDefault();
     setError(null);
 
+    console.log('Número de cuenta:', numeroCuenta);
+    console.log('Valor a retirar:', valor);
+
     if (numeroCuenta.length !== 10) {
       setError('El número de cuenta debe tener 10 dígitos.');
       return;
@@ -107,7 +110,7 @@ const Retiros = () => {
 
         <div className="button-section">
           <ConfirmarRetiro
-            numeroCuenta={numeroCuenta}
+            cuentaOrigen={numeroCuenta}
             tipoCuenta={tipoCuenta}
             monto={valor}
             onSuccess={() => setError(null)}
