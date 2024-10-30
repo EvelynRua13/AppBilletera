@@ -64,6 +64,7 @@ const ConfirmarRetiroButton = ({ cuentaOrigen, monto, onSuccess, onError }) => {
 
       console.log('Egreso agregado con éxito');
       onSuccess('Retiro realizado con éxito.');
+      window.alert("Retiro Realizado con éxito");
       navigate('/principal');
     } catch (error) {
       console.error('Error en el retiro:', error);

@@ -79,6 +79,7 @@ const ConfirmarTransaccionButton = ({ cuentaDestino, monto, cuentaOrigen, onSucc
       await refreshUser();
       
       onSuccess('Transacción realizada con éxito.');
+      window.alert("Transacción realizada con éxito");
       navigate('/principal');
     } catch (error) {
       console.error('Error en la transacción:', error);
