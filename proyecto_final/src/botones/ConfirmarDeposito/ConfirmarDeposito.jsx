@@ -1,9 +1,12 @@
+// ConfirmarDepositoButton.jsx
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Utils/Context';
 import './ConfirmarDeposito.css';
 
-const ConfirmarDepositoButton = ({ numeroCuenta, tipoCuenta, monto, onSuccess, onError }) => {
+const ConfirmarDepositoButton = ({ numeroCuenta, monto, onSuccess, onError }) => {
+  const navigate = useNavigate();
   const { token, refreshUser } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -14,64 +17,64 @@ const ConfirmarDepositoButton = ({ numeroCuenta, tipoCuenta, monto, onSuccess, o
     }
 
     setIsLoading(true);
-    
+
     try {
-      // 1. Registrar la transacción
-      const transaccionResponse = await fetch('http://localhost:3000/api/transacciones', {
+      // Realizar el depósito usando el nuevo endpoint
+      let depositoResponse = await fetch('http://localhost:3000/api/depositos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          numero_cuenta: numeroCuenta,
-          tipo_cuenta: tipoCuenta,
-          tipo_transaccion: 'deposito',
-          monto: Number(monto),
-          fecha: new Date().toISOString()
+          cuentaDestino: numeroCuenta,
+          fecha: new Date().toISOString(),
+          monto: Number(monto)
         }),
       });
 
-      if (!transaccionResponse.ok) {
-        throw new Error('Error al registrar la transacción');
+      if (!depositoResponse.ok) {
+        const errorData = await depositoResponse.json();
+        throw new Error(errorData.message || 'Error al realizar el depósito');
       }
 
-      // 2. Registrar el ingreso
-      const ingresoResponse = await fetch('http://localhost:3000/api/ingresos', {
+      //Agregar el egreso a la tabla de Ingresos
+      depositoResponse = await fetch('http://localhost:3000/api/ingresos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          numero_cuenta: numeroCuenta,
-          monto: Number(monto),
-          fecha: new Date().toISOString()
+          cuentaDestino: numeroCuenta, // ID de la cuenta de Destino
+          monto: monto,              // Monto de ingreso
+          fecha: new Date().toISOString(),         // Fecha actual
         }),
       });
 
-      if (!ingresoResponse.ok) {
-        throw new Error('Error al registrar el ingreso');
+      if (!depositoResponse.ok) {
+        const errorData = await depositoResponse.json();
+        throw new Error(errorData.message || 'Error al agregar el egreso');
       }
 
-      // 3. Actualizar el saldo del usuario
+      // Actualizar la información del usuario
       await refreshUser();
       
       onSuccess('Depósito realizado con éxito');
+      window.alert("Depósito Realizado con éxito");
+      navigate('/principal');
       return true;
 
     } catch (error) {
-      console.error('Error en el depósito:', error);
       onError(error.message || 'Error al procesar el depósito. Por favor, intente nuevamente.');
+      console.error('Error en el retiro:', error);
       return false;
-
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <button 
+    <button
       className={`confirmar-button ${isLoading ? 'loading' : ''}`}
       onClick={handleConfirmarDeposito}
       disabled={isLoading}

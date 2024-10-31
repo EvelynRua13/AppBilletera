@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types'; 
 import './ConfirmarPrestamo.css'; 
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Utils/Context';
 
 const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSuccess, onError }) => {
+  const navigate = useNavigate();
+  const { token, refreshUser } = useAuth();
+  
   const handleConfirmarPrestamo = async () => {
     if (!monto || isNaN(monto) || Number(monto) <= 0) {
       onError('Por favor, introduce un monto válido.');
@@ -11,62 +16,65 @@ const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSucc
 
     if (!plazo || isNaN(plazo) || Number(plazo) <= 0) {
       onError('Por favor, introduce un plazo en meses válido.');
-      return;
+      return; 
     }
 
     // Lógica comentada para registrar el préstamo en la base de datos
-    /*
     try {
       const fechaSolicitud = new Date();
 
       // 1. Agregar el préstamo a la tabla de Préstamos
-      await fetch('/api/prestamos', {
+      let prestamosResponse = await fetch('http://localhost:3000/api/prestamos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          usuario_id: usuarioId,  // ID del usuario que solicita el préstamo
+          cuentaId: numeroCuenta,  // ID del usuario que solicita el préstamo
           monto: monto,           // Monto del préstamo
           plazo: plazo,           // Plazo en meses
           estado: 'aprobado',    // Estado inicial del préstamo
           fecha_solicitud: fechaSolicitud, // Fecha de la solicitud
         }),
       });
+      if (!prestamosResponse.ok) {
+        const errorData = await prestamosResponse.json();
+        throw new Error(errorData.message || 'Error al realizar el depósito');
+      }
 
       // 2. Agregar el ingreso a la tabla de Ingresos
-      await fetch('/api/ingresos', {
+      prestamosResponse = await fetch('http://localhost:3000/api/ingresos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          usuario_id: usuarioId,  // ID del usuario que recibe el ingreso
+          cuentaDestino: numeroCuenta,  // ID del usuario que recibe el ingreso
           monto: monto,           // Monto del ingreso
           fecha: fechaSolicitud,  // Fecha de ingreso
         }),
       });
+       
 
-      // 3. Agregar la deuda a la tabla de Deudas
-      await fetch('/api/deudas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          usuario_id: usuarioId,  // ID del usuario que tiene la deuda
-          descripcion: 'Préstamo solicitado', // Descripción de la deuda
-          monto: monto,           // Monto total de la deuda
-          fecha: fechaSolicitud,  // Fecha de la deuda
-        }),
-      });
+      if (!prestamosResponse.ok) {
+        const errorData = await prestamosResponse.json();
+        throw new Error(errorData.message || 'Error al agregar el egreso');
+      }
 
-      onSuccess('Préstamo solicitado con éxito.');
+      // Actualizar la información del usuario
+      await refreshUser();
+      
+      onSuccess('Prestamo realizado con éxito');
+      window.alert("Prestamo Realizado con éxito");
+      navigate('/principal');
+      return true;
+
+
+
     } catch (error) {
       console.error('Error en la solicitud del préstamo:', error);
       onError('Error al conectar con el servidor.');
     }
-    */
   };
 
   return (
