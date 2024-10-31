@@ -7,6 +7,8 @@ import transaccionesRuta from './Rutas/transaccionesRuta.js';
 import ingresosRuta from './Rutas/ingresosRuta.js';
 import egresosRuta from './Rutas/egresosRuta.js';
 import retirosRuta from './Rutas/retirosRuta.js'
+import realizarDeposito from './Rutas/depositosRuta.js';
+import crearSolicitudPrestamo from './Rutas/prestamosRuta.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -25,6 +27,8 @@ app.use('/api', transaccionesRuta)
 app.use('/api', ingresosRuta)
 app.use('/api', egresosRuta)
 app.use('/api', retirosRuta)
+app.use('/api', realizarDeposito)
+app.use('/api', crearSolicitudPrestamo)
 
 app.set('port', process.env.PORT || 3000);
 
