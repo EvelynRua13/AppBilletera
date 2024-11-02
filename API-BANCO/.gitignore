@@ -165,3 +165,4 @@ npm-debug.log
 .env
 
 config.js
+node_modules/
