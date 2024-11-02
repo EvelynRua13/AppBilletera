@@ -5,6 +5,7 @@
     height: 100vh;
     background-image: linear-gradient(to top, #810ab1, #3f5feb, rgb(78, 198, 228), #bfe6f8, white);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, sans-serif;
+    overflow: hidden;
   }
   
   .retiros-form {
