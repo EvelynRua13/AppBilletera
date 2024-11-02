@@ -6,7 +6,7 @@ import { useAuth } from '../../Utils/Context';
 
 const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSuccess, onError }) => {
   const navigate = useNavigate();
-  const { token, refreshUser } = useAuth();
+  const {token, refreshUser } = useAuth();
   
   const handleConfirmarPrestamo = async () => {
     if (!monto || isNaN(monto) || Number(monto) <= 0) {
@@ -28,6 +28,7 @@ const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSucc
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           cuentaId: numeroCuenta,  // ID del usuario que solicita el préstamo
@@ -42,11 +43,12 @@ const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSucc
         throw new Error(errorData.message || 'Error al realizar el depósito');
       }
 
-      // 2. Agregar el ingreso a la tabla de Ingresos
+      // 2. Agregar a la tabla de Ingresos
       prestamosResponse = await fetch('http://localhost:3000/api/ingresos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           cuentaDestino: numeroCuenta,  // ID del usuario que recibe el ingreso
@@ -58,7 +60,7 @@ const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSucc
 
       if (!prestamosResponse.ok) {
         const errorData = await prestamosResponse.json();
-        throw new Error(errorData.message || 'Error al agregar el egreso');
+        throw new Error(errorData.message || 'Error al agregar el ingreso');
       }
 
       // Actualizar la información del usuario
@@ -73,7 +75,9 @@ const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSucc
 
     } catch (error) {
       console.error('Error en la solicitud del préstamo:', error);
-      onError('Error al conectar con el servidor.');
+      onError('No se pudo procesar el prestamo.' + error.message);
+      window.alert("No se puede procesar prestamo porque ya tiene uno pendiente");
+      navigate('/principal')
     }
   };
 

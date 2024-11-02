@@ -79,7 +79,7 @@ const Prestamos = () => {
           <p>Error: No se pudo cargar la información de la cuenta. Por favor, inicie sesión nuevamente.</p>
         </div>
       </div>
-    );
+    ); 
   }
 
   return (
