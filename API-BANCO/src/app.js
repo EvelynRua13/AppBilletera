@@ -25,7 +25,6 @@ app.use('/api', transaccionesRuta)
 app.use('/api', ingresosRuta)
 app.use('/api', egresosRuta)
 app.use('/api', retirosRuta)
-
 app.set('port', process.env.PORT || 3000);
 
 export default app;
