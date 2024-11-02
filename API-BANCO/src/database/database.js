@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 
 const getConnection = async () => {
     const connection = await pool.getConnection();
-    return connection; // Devuelve una conexión del pool
+    return connection; 
 };
 
 export { getConnection };

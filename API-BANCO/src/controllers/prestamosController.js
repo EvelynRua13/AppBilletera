@@ -55,30 +55,12 @@ export const actualizarEstadoPrestamo = async (req, res) => {
             [nuevoEstado, prestamoId]
         );
 
-
-            // Actualizar el saldo del usuario
-            await connection.query(
-                'UPDATE usuarios SET saldo = saldo + ? WHERE numero_cuenta = ?',
-                [monto, usuarioId]
-            );
-
             // Registrar prestamo
             await connection.query(
-                'INSERT INTO deudas (cuenta_id, estado, monto, fecha) VALUES (?, ?, ?, NOW(), ?)',
-                [usuarioId, 'pendiente', monto, `PRESTAMO-${prestamoId}`]
+                'INSERT INTO deudas (cuenta_id,monto, fecha, estado,plazo) VALUES (?, ?, ?, NOW(), ?)',
+                [usuarioId, monto, `PRESTAMO-${prestamoId}`,'pendiente', plazo]
             );
 
-            // Actualizar el fondo de préstamos
-            await connection.query(
-                'UPDATE fondo_prestamos SET saldo = saldo - ? WHERE activo = 1',
-                [monto]
-            );
-
-            // Crear registro en tabla de pagos
-            await connection.query(
-                'INSERT INTO pagos_prestamo (prestamo_id, monto_total, saldo_pendiente, estado) VALUES (?, ?, ?, "pendiente")',
-                [prestamoId, monto, monto]
-            );
         }catch(exception){
             console.log(exception);
         }
@@ -121,9 +103,16 @@ export const crearSolicitudPrestamo = async (req, res) => {
 
         // Crear la solicitud de préstamo
         const [resultado] = await connection.query(
-            'INSERT INTO deudas (cuenta_id, monto, plazo ,estado) VALUES (?, ?, ?, ?)',
-            [cuentaId, monto, plazo,  ESTADO_PRESTAMO.PENDIENTE]
+            'INSERT INTO deudas (cuenta_id, monto, estado,plazo) VALUES (?, ?, ?, ?)',
+            [cuentaId, monto,'aprobado',plazo]
         );
+
+          // Actualizar el saldo del usuario
+          await connection.query(
+            'UPDATE usuarios SET saldo = saldo + ? WHERE numero_cuenta = ?',
+            [monto, cuentaId]
+        );
+
 
         return res.status(201).json({
             message: 'Solicitud de préstamo creada exitosamente.',
@@ -131,6 +120,7 @@ export const crearSolicitudPrestamo = async (req, res) => {
         });
 
     } catch (error) {
+        if (connection) await connection.rollback(); 
         console.error('Error al crear la solicitud de préstamo:', error.message);
         return res.status(500).json({
             message: 'Error al procesar la solicitud de préstamo.',
