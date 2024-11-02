@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types'; 
 import './ConfirmarPrestamo.css'; 
 import { useNavigate } from 'react-router-dom';
@@ -6,9 +6,12 @@ import { useAuth } from '../../Utils/Context';
 
 const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSuccess, onError }) => {
   const navigate = useNavigate();
-  const {token, refreshUser } = useAuth();
+  const { token, refreshUser } = useAuth();
+  const [isProcessing, setIsProcessing] = useState(false);
   
   const handleConfirmarPrestamo = async () => {
+    if (isProcessing) return; // Prevenir múltiples clicks
+
     if (!monto || isNaN(monto) || Number(monto) <= 0) {
       onError('Por favor, introduce un monto válido.');
       return;
@@ -19,83 +22,94 @@ const ConfirmarPrestamoButton = ({ numeroCuenta, monto, plazo, usuarioId, onSucc
       return; 
     }
 
-    // Lógica comentada para registrar el préstamo en la base de datos
+    setIsProcessing(true);
+
     try {
       const fechaSolicitud = new Date();
 
-      // 1. Agregar el préstamo a la tabla de Préstamos
-      let prestamosResponse = await fetch('http://localhost:3000/api/prestamos', {
+      // 1. Agregar el préstamo
+      const prestamosResponse = await fetch('http://localhost:3000/api/prestamos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          cuentaId: numeroCuenta,  // ID del usuario que solicita el préstamo
-          monto: monto,           // Monto del préstamo
-          plazo: plazo,           // Plazo en meses
-          estado: 'aprobado',    // Estado inicial del préstamo
-          fecha_solicitud: fechaSolicitud, // Fecha de la solicitud
+          cuentaId: numeroCuenta,
+          monto: monto,
+          plazo: plazo,
+          estado: 'aprobado',
+          fecha_solicitud: fechaSolicitud,
         }),
       });
+
       if (!prestamosResponse.ok) {
         const errorData = await prestamosResponse.json();
-        throw new Error(errorData.message || 'Error al realizar el depósito');
+        throw new Error(errorData.message || 'Error al realizar el préstamo');
       }
 
-      // 2. Agregar a la tabla de Ingresos
-      prestamosResponse = await fetch('http://localhost:3000/api/ingresos', {
+      // 2. Registrar el ingreso
+      const ingresosResponse = await fetch('http://localhost:3000/api/ingresos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          cuentaDestino: numeroCuenta,  // ID del usuario que recibe el ingreso
-          monto: monto,           // Monto del ingreso
-          fecha: fechaSolicitud,  // Fecha de ingreso
+          cuentaDestino: numeroCuenta,
+          monto: monto,
+          fecha: fechaSolicitud,
         }),
       });
        
-
-      if (!prestamosResponse.ok) {
-        const errorData = await prestamosResponse.json();
-        throw new Error(errorData.message || 'Error al agregar el ingreso');
+      if (!ingresosResponse.ok) {
+        const errorData = await ingresosResponse.json();
+        throw new Error(errorData.message || 'Error al registrar el ingreso');
       }
 
-      // Actualizar la información del usuario
+      // 3. Actualizar la información del usuario
       await refreshUser();
       
-      onSuccess('Prestamo realizado con éxito');
-      window.alert("Prestamo Realizado con éxito");
-      navigate('/principal');
-      return true;
-
-
+      // 4. Esperar un momento para asegurar que los estados se actualicen
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      onSuccess('Préstamo realizado con éxito');
+      window.alert("Préstamo realizado con éxito");
+      
+      // 5. Navegar a la página principal
+      navigate('/principal', { replace: true });
 
     } catch (error) {
       console.error('Error en la solicitud del préstamo:', error);
-      onError('No se pudo procesar el prestamo.' + error.message);
-      window.alert("No se puede procesar prestamo porque ya tiene uno pendiente");
-      navigate('/principal')
+      
+      let errorMessage = 'No se puede procesar el préstamo ya tienes uno sin pagar. ';
+      
+      onError(errorMessage);
+      window.alert(errorMessage);
+      navigate('/principal', { replace: true });
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   return (
-    <button className="confirmar-button" onClick={handleConfirmarPrestamo}>
-      Confirmar
+    <button 
+      className={`confirmar-button ${isProcessing ? 'processing' : ''}`} 
+      onClick={handleConfirmarPrestamo}
+      disabled={isProcessing}
+    >
+      {isProcessing ? 'Procesando...' : 'Confirmar'}
     </button>
   );
 };
 
 ConfirmarPrestamoButton.propTypes = {
-  numeroCuenta: PropTypes.string.isRequired, // Número de cuenta
-  monto: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Monto del préstamo
-  plazo: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Plazo en meses
-  usuarioId: PropTypes.string.isRequired,    // ID del usuario que solicita el préstamo
+  numeroCuenta: PropTypes.string.isRequired,
+  monto: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  plazo: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  usuarioId: PropTypes.string.isRequired,
   onSuccess: PropTypes.func.isRequired,
   onError: PropTypes.func.isRequired,
 };
 
 export default ConfirmarPrestamoButton;
-

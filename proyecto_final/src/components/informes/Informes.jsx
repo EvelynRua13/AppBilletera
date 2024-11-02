@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 import './Informes.css';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../botones/navbar/Navbar';
+import { useAuth } from '../../Utils/Context';
 
 const Informes = () => {
-  const [usuarioId, setUsuarioId] = useState("12345"); // Ejemplo de ID de usuario
+  const { user } = useAuth(); 
   const [historicoIngresos, setHistoricoIngresos] = useState([]);
   const [historicoEgresos, setHistoricoEgresos] = useState([]);
-  const [deudas, setDeudas] = useState(null); // Aquí se almacenarán las deudas (más adelante se traerán del backend)
+  const [deudas, setDeudas] = useState(null);
 
   const handleVerIngresos = () => {
     // Lógica para traer los ingresos del backend (espacio reservado)
-    // Ejemplo: setHistoricoIngresos(response.data.ingresos);
   };
 
   const handleVerEgresos = () => {
     // Lógica para traer los egresos del backend (espacio reservado)
-    // Ejemplo: setHistoricoEgresos(response.data.egresos);
   };
 
   return (
@@ -25,13 +24,12 @@ const Informes = () => {
       <h2>Informes del Usuario</h2>
       
       <div className="info-section">
-        <p><strong>ID del Usuario:</strong> {usuarioId}</p>
+        <p><strong>Cuenta del Usuario:</strong> {user ? user.numero_cuenta : 'Cargando...'}</p>
       </div>
 
       <div className="historico-section">
         <p><strong>Histórico de Ingresos:</strong></p>
         <div className="historico-ingresos">
-          {/* Aquí irán los ingresos traídos del backend */}
           {historicoIngresos.length === 0 ? (
             <p>No hay datos de ingresos disponibles</p>
           ) : (
@@ -45,7 +43,6 @@ const Informes = () => {
         
         <p><strong>Histórico de Egresos:</strong></p>
         <div className="historico-egresos">
-          {/* Aquí irán los egresos traídos del backend */}
           {historicoEgresos.length === 0 ? (
             <p>No hay datos de egresos disponibles</p>
           ) : (
@@ -61,8 +58,6 @@ const Informes = () => {
       <div className="deudas-section">
         <p><strong>Deudas:</strong></p>
         <div className="deudas-table">
-          {/* Espacio en blanco para la tabla de deudas */}
-          {/* Aquí se mostrará la tabla traída del backend */}
           {deudas ? (
             <table>
               <thead>
@@ -72,7 +67,6 @@ const Informes = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* Muestra los datos de las deudas */}
                 {deudas.map((deuda, index) => (
                   <tr key={index}>
                     <td>{deuda.descripcion}</td>
@@ -88,20 +82,11 @@ const Informes = () => {
       </div>
 
       <div className="button-section">
-        {/* Botón para ver ingresos */}
         <button onClick={handleVerIngresos} className="button-ingresos">Ver Ingresos</button>
-
-        {/* Botón para ver egresos */}
         <button onClick={handleVerEgresos} className="button-egresos">Ver Egresos</button>
       </div>
-
-    {/* Botones (Principal y logOut) */}
-    <div className="button-navigation">
-    </div>
-    
     </div>
   );
 };
 
 export default Informes;
-

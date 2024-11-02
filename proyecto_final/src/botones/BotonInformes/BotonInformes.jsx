@@ -30,7 +30,7 @@ const BotonIrAInformes = () => {
     }
     */
 
-    // Una vez que los datos estén listos, redirigir a la página de informes
+   
     navigate('/informes'); 
   };
 

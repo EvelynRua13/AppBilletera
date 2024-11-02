@@ -6,13 +6,21 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(() => localStorage.getItem('token'));
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(false);  // Changed initial state to false
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [lastUpdate, setLastUpdate] = useState(null);
 
-    const login = (newToken) => {
+    const login = async (newToken) => {
         setToken(newToken);
         localStorage.setItem('token', newToken);
-        return fetchUserData(newToken);  // Return the promise
+        try {
+            await fetchUserData(newToken);
+            return true;
+        } catch (error) {
+            console.error('Error during login:', error);
+            logout();
+            throw error;
+        }
     };
 
     const logout = useCallback(() => {
@@ -21,6 +29,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         setLoading(false);
         setError(null);
+        setLastUpdate(null);
     }, []);
 
     const fetchUserData = useCallback(async (currentToken) => {
@@ -41,6 +50,8 @@ export const AuthProvider = ({ children }) => {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${currentToken}`,
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
                 },
                 signal: controller.signal
             });
@@ -58,6 +69,8 @@ export const AuthProvider = ({ children }) => {
             const data = await response.json();
             setUser(data);
             setError(null);
+            setLastUpdate(new Date().getTime());
+            return data;
         } catch (error) {
             console.error('Error al obtener datos del usuario:', error);
             setError(error.message);
@@ -65,6 +78,7 @@ export const AuthProvider = ({ children }) => {
             if (error.name === 'AbortError') {
                 setError('Tiempo de espera agotado al cargar los datos del usuario');
             }
+            throw error;
         } finally {
             setLoading(false);
         }
@@ -72,12 +86,31 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (token) {
-            fetchUserData(token);
+            fetchUserData(token).catch(error => {
+                console.error('Error in initial user data fetch:', error);
+            });
         } else {
             setUser(null);
             setLoading(false);
         }
     }, [token, fetchUserData]);
+
+    const refreshUser = useCallback(async () => {
+        if (!token) return null;
+        
+        try {
+            const updatedUser = await fetchUserData(token);
+            // Esperar un momento para asegurar que los estados se actualicen
+            await new Promise(resolve => setTimeout(resolve, 100));
+            return updatedUser;
+        } catch (error) {
+            console.error('Error refreshing user data:', error);
+            if (error.message.includes('Sesión expirada')) {
+                logout();
+            }
+            throw error;
+        }
+    }, [token, fetchUserData, logout]);
 
     const value = {
         token,
@@ -86,13 +119,8 @@ export const AuthProvider = ({ children }) => {
         error,
         login,
         logout,
+        refreshUser,
         fetchUserData: () => fetchUserData(token),
-        refreshUser: () => {
-            if (token) {
-                return fetchUserData(token);
-            }
-            return Promise.resolve();
-        }
     };
 
     return (
@@ -106,5 +134,11 @@ AuthProvider.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth debe ser usado dentro de un AuthProvider');
+    }
+    return context;
+};
 
