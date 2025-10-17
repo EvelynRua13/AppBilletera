@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { getConnection } from '../database/database.js';
+import logger from '../utils/logger.js';
 
 export const registrarUsuario = async (req, res) => {
     const { nombre, email, password, numero_cuenta, tipo } = req.body;
@@ -33,9 +34,9 @@ export const registrarUsuario = async (req, res) => {
         return res.status(201).json({ message: 'Usuario registrado con éxito.' });
 
     } catch (error) {
-        console.error('Error al registrar el usuario:', error);
+        logger.error('Error al registrar el usuario:', error.message || error);
         return res.status(500).json({ message: 'Error en el servidor.' });
     } finally {
-        if (connection) connection.release();
+        if (connection && typeof connection.release === 'function') connection.release();
     }
 };

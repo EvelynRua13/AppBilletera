@@ -11,9 +11,13 @@ const pool = mysql.createPool({
 
 const getConnection = async () => {
     const connection = await pool.getConnection();
-    return connection; 
+    return connection; // connection soporta beginTransaction/commit/rollback/query/release
 };
 
-export { getConnection };
+const closePool = async () => {
+    await pool.end();
+};
+
+export { getConnection, pool, closePool };
 
 

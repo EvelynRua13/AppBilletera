@@ -1,32 +1,29 @@
 import { getConnection } from '../database/database.js';
+import logger from '../utils/logger.js';
 
 export const agregarEgreso = async (req, res) => {
-    console.log('Datos de egreso recibidos:', req.body);
-    const { cuentaOrigen, monto } = req.body;
+    const { cuentaOrigen, monto } = req.body || {};
 
-    // Validar que todos los campos estén completos y el monto sea válido
-    if (!cuentaOrigen || !monto || monto <= 0) {
+    // Validación básica
+    if (!cuentaOrigen || monto === undefined || monto === null || isNaN(monto) || Number(monto) <= 0) {
         return res.status(400).json({ message: 'Datos de egreso inválidos.' });
     }
 
     let connection;
-
     try {
-        // Obtener la conexión a la base de datos
         connection = await getConnection();
-        
-        // 1. Agregar egreso a la tabla de Egresos
+
         await connection.query(
             'INSERT INTO egresos (usuario_id, monto, fecha) VALUES (?, ?, ?)',
-            [cuentaOrigen, monto, new Date()] // Asegúrate de que usuario_id sea correcto
+            [cuentaOrigen, Number(monto), new Date()]
         );
 
         return res.status(200).json({ message: 'Egreso registrado con éxito.' });
 
     } catch (error) {
-        console.error('Error al agregar el egreso:', error.message);
+        logger.error('Error al agregar el egreso:', error.message);
         return res.status(500).json({ message: 'Error al procesar el egreso.', error: error.message });
     } finally {
-        if (connection) connection.release(); // Liberar la conexión
+        if (connection && typeof connection.release === 'function') connection.release();
     }
 };

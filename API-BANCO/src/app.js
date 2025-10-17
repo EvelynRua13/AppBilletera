@@ -10,6 +10,7 @@ import retirosRuta from './Rutas/retirosRuta.js'
 import realizarDeposito from './Rutas/depositosRuta.js';
 import crearSolicitudPrestamo from './Rutas/prestamosRuta.js';
 import { getConnection } from './database/database.js';
+import logger from './utils/logger.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -17,11 +18,11 @@ dotenv.config();
 // Prueba de conexión a MySQL
 getConnection()
   .then(conn => {
-    console.log('Conexión a MySQL exitosa');
+    logger.info('Conexión a MySQL exitosa');
     conn.release();
   })
   .catch(err => {
-    console.error('Error de conexión a MySQL:', err);
+    logger.error('Error de conexión a MySQL:', err);
   });
 
 const app = express();
