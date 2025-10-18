@@ -27,6 +27,18 @@ jobs:
           JEST_JUNIT_OUTPUT: ./coverage/junit.xml
         run: npm run test:ci
 
+      - name: Debug coverage files (backend)
+        working-directory: API-BANCO
+        run: |
+          echo "=== List coverage dir ==="
+          ls -la coverage || true
+          echo "=== first lines of lcov.info ==="
+          if [ -f coverage/lcov.info ]; then
+            sed -n '1,40p' coverage/lcov.info
+          else
+            echo "NO lcov.info found"
+          fi
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
