@@ -17,10 +17,12 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      - name: Install dependencies (backend)
+        working-directory: API-BANCO
         run: npm ci
 
-      - name: Run tests with coverage and junit report
+      - name: Run tests with coverage and junit report (backend)
+        working-directory: API-BANCO
         env:
           JEST_JUNIT_OUTPUT: ./coverage/junit.xml
         run: npm run test:ci
